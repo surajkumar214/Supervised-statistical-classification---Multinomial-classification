@@ -29,6 +29,10 @@ library(AER)
 library(car)
 library(janitor)
 library(plotly)
+library(nnet)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
 ```
 
 
@@ -161,11 +165,29 @@ summary(ablone.pca)
 
 biplot(ablone.pca,cex=.7,choices = c(1,4))
 
-m1 <- multinom( ablone$rings~ age + sex, weight = frequency, data = dcars)
+m1 <- multinom( rings ~ .,data = ablone.train,maxit = 1000)
 
 summary(m1)
 
-#apply multinomial,, see the classification error, baised error , prediction error
+
+m2 <- multinom( ablone.train$rings~ablone.pca$scores[,1] + ablone.train$sex,maxit = 1000)
+
+summary(m2)
+
+#performance checking
+
+sum(as.character(ablone.test$rings)!=as.character(predict(m1,ablone.test)))*100/dim(ablone.test)[1]
+
+sum(as.character(ablone.test$rings)!=as.character(predict(m2,ablone.test)))*100/dim(ablone.test)[1]
+
+#apply tree classification
+#out of bag estimate, randomforest
+raf <- randomForest(rings~., data = ablone.upd, ntree = 200)
+print(raf)
+importance(raf)
+varImpPlot(raf)
+
+
 #apply tree, apply svm, apply neural network
 
 ```
