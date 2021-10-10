@@ -1,0 +1,175 @@
+---
+title: 'Supervised statistical classification-Multinomial'
+author: "Suraj Kumar"
+date: "15/09/2021"
+output: github_document
+number_sections: yes
+always_allow_html: true
+
+fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(kableExtra)
+library(gridExtra)
+library(GGally)
+library(infer)
+library(broom)
+library(ggfortify)
+library(jtools)
+library(AER)
+library(car)
+library(janitor)
+library(plotly)
+```
+
+
+```{r dataset, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+ablone<-read.csv("/home/suraj/Desktop/stats_folder/Supervised/Abalone.txt")
+#loaded the dataset
+ablone$sex <- as.factor(ablone$sex)
+ablone$rings <- as.factor(ablone$rings)
+
+car<-read.csv("/home/suraj/Desktop/stats_folder/Supervised/Car Evaluation.txt")
+#loaded the dataset
+
+car[sapply(car,is.character)]<-lapply(car[sapply(car,is.character)],as.factor)
+#modified character variable to factor
+contra <- read.csv("/home/suraj/Desktop/stats_folder/Supervised/Contraceptive Method Choice.txt")
+contra[sapply(contra,is.character)]<-lapply(contra[sapply(contra,is.character)],as.factor)
+
+nursery <- read.csv("/home/suraj/Desktop/stats_folder/Supervised/Nursery.txt")
+nursery[sapply(nursery,is.character)]<-lapply(nursery[sapply(nursery,is.character)],as.factor)
+```
+
+
+
+```{r Exploratory analysis ablone, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+skim(ablone)
+
+ablone %>%
+  ggplot(aes(x = rings,y = length),color = sex) +
+  geom_boxplot() +
+  facet_wrap("sex")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  
+  
+ablone %>%
+  ggplot(aes(x = rings,y = ablone$diameter),color = sex) +
+  geom_boxplot() +
+  facet_wrap("sex")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  
+ablone %>%
+  ggplot(aes(x = rings,y = ablone$height),color = sex) +
+  geom_boxplot() +
+  facet_wrap("sex")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  
+ablone %>%
+  ggplot(aes(x = rings,y = ablone$whole.weight),color = sex) +
+  geom_boxplot() +
+  facet_wrap("sex")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  
+ablone %>%
+  ggplot(aes(x = rings,y = ablone$shucked.weight),color = sex) +
+  geom_boxplot() +
+  facet_wrap("sex")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+
+ablone %>%
+  ggplot(aes(x = rings,y = ablone$viscera.weight),color = sex) +
+  geom_boxplot() +
+  facet_wrap("sex")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  
+ablone %>%
+  ggplot(aes(x = rings,y = ablone$shell.weight),color = sex) +
+  geom_boxplot() +
+  facet_wrap("sex")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  
+ 
+
+  
+ablone %>%
+  tabyl(rings,sex) %>%
+  adorn_percentages() %>%
+  adorn_pct_formatting() %>%
+  adorn_ns()
+
+ablone %>%
+  select(-c(sex,rings))%>%
+  ggpairs()
+
+        
+
+
+#No missing data
+
+#addresesing outliers
+plot<-ablone %>%
+  select(-c(sex,rings))%>%
+  ggplot(aes(x = length,y = height)) +
+  geom_point() 
+  
+ 
+sp<-ggplotly(plot)
+
+outliers <- which(ablone$height >=0.500)
+
+
+
+ablone.upd<- ablone %>%
+  slice(-outliers)
+
+
+ablone.upd %>%
+  select(-c(sex,rings))%>%
+  ggpairs()
+
+
+
+#dividing the data set into training and testing sub datasets
+n <- dim(ablone.upd)[1]
+set.seed(1)
+ind <- sample(c(1:n),0.6*n) # 60%-40% training and test split
+ablone.train <- ablone.upd[ ind,] 
+ablone.test <- ablone.upd[-ind,]
+
+
+#high multicolinearity, apply pca
+ablone.train %>%
+  select(-c(sex,rings))%>%
+  summarise_if(is.numeric,
+               list(v= var),na.rm = T)
+  
+ablone.pca <-ablone.train %>%
+  select(-c(sex,rings))%>% 
+  princomp(cor=T)
+
+summary(ablone.pca)
+
+biplot(ablone.pca,cex=.7,choices = c(1,4))
+
+m1 <- multinom( ablone$rings~ age + sex, weight = frequency, data = dcars)
+
+summary(m1)
+
+#apply multinomial,, see the classification error, baised error , prediction error
+#apply tree, apply svm, apply neural network
+
+```
+
+
+
+
