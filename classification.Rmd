@@ -33,6 +33,9 @@ library(nnet)
 library(rpart)
 library(rpart.plot)
 library(randomForest)
+library(neuralnet)
+library(nnet)
+library(VGAM)
 ```
 
 
@@ -144,6 +147,7 @@ ablone.upd %>%
 
 
 #dividing the data set into training and testing sub datasets
+
 n <- dim(ablone.upd)[1]
 set.seed(1)
 ind <- sample(c(1:n),0.6*n) # 60%-40% training and test split
@@ -178,7 +182,7 @@ summary(m2)
 
 sum(as.character(ablone.test$rings)!=as.character(predict(m1,ablone.test)))*100/dim(ablone.test)[1]
 
-sum(as.character(ablone.test$rings)!=as.character(predict(m2,ablone.test)))*100/dim(ablone.test)[1]
+sum(as.character(ablone.train$rings)!=as.character(predict(m2)))*100/dim(ablone.train)[1]
 
 #apply tree classification
 #out of bag estimate, randomforest
@@ -186,9 +190,33 @@ raf <- randomForest(rings~., data = ablone.upd, ntree = 200)
 print(raf)
 importance(raf)
 varImpPlot(raf)
+ablone.train <- droplevels(ablone.train)
+
+raf <- randomForest(ablone.train$rings~ablone.pca$scores[,1]+ablone.train$sex ,ntree = 200)
+print(raf)
+importance(raf)
+varImpPlot(raf)
+
+#, apply neural network
+# have training and test data set
+set.seed(84)
+alpha <- 0.7 # percentage of training set
+inTrain <- sample(1:n, round(alpha * n))
+train.set <- ablone.upd[ inTrain,]
+test.set <- ablone.upd[-inTrain,]
+
+trainData <- cbind(class.ind(train.set$sex),train.set[, 2:8], class.ind(train.set$rings))
+head(trainData)
+
+testData <- cbind(class.ind(test.set$sex),test.set[, 2:8], class.ind(test.set$rings))
 
 
-#apply tree, apply svm, apply neural network
+set.seed(84)
+f <- paste(c("train$Creditability~",predictor_list),collapse="")
+
+nn_ablone <- neuralnet(f,
+data=trainData, hidden=c(2,2), linear.output=FALSE,err.fct='ce', likelihood=TRUE)
+plotnet(nn_ablone)
 
 ```
 
