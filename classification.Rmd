@@ -439,204 +439,526 @@ mean(original_values==predictions_test)
 ```
 
 ```{r Exploratory & formal analysis nursery, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
-skim(car)
+skim(nursery)
 
 
 
 
-tab2 <- table(car$class)
+tab2 <- table(nursery$class)
 tab2<- as.data.frame(tab2)
 colnames(tab2) <- c("class", "number")
 
 ggplot(data = tab2, mapping = aes(x =class, y = number)) +
   geom_col()
 
- class.buying<- table(car$class,car$Buying)
- class.buying <- as.data.frame( class.buying)
- colnames(class.buying) <- c("class", "buying", "number")
+ class.parents<- table(nursery$class,nursery$parents)
+ class.parents <- as.data.frame( class.parents)
+ colnames(class.parents) <- c("class", "parents", "number")
 
- ggplot(data = class.buying, mapping = aes(x = buying, y = number, fill = class)) +
+ ggplot(data = class.parents, mapping = aes(x = parents, y = number, fill = class)) +
   geom_col() +
-  labs(x = "buying", y = "class",
-        title = "class distribution buying price wise") 
+  labs(x = "parents", y = "class",
+        title = "class distribution parents wise") 
 
-ggplot(data = class.buying, mapping = aes(x = buying, y = number, fill = class)) +
+ggplot(data = class.parents, mapping = aes(x = parents, y = number, fill = class)) +
   geom_col(position = "dodge") +
-  labs(x = "buying", y = "class",
-        title = "class distribution buying price wise") 
+  labs(x = "parents", y = "class",
+        title = "class distribution parents wise") 
 
-ggplot(data = class.buying, mapping = aes(x = buying, y = number, fill = class)) +
+ggplot(data = class.parents, mapping = aes(x = parents, y = number, fill = class)) +
   geom_col() +
   facet_wrap(~class,ncol = 1)
-  labs(x = "buying", y = "class",
-        title = "class distribution buying price wise") 
+  labs(x = "parents", y = "class",
+        title = "class distribution parents wise") 
 
-#second var maint
-  class.maint<- table(car$class,car$maint)
- class.maint <- as.data.frame( class.maint)
- colnames(class.maint) <- c("class", "maint", "number")
+#second var has_nurs
+  class.nurs<- table(nursery$class,nursery$has_nurs)
+ class.nurs <- as.data.frame( class.nurs)
+ colnames(class.nurs) <- c("class", "has_nurs", "number")
 
- ggplot(data = class.maint, mapping = aes(x = maint, y = number, fill = class)) +
+ ggplot(data = class.nurs, mapping = aes(x = has_nurs, y = number, fill = class)) +
   geom_col() +
-  labs(x = "maint", y = "class",
-        title = "class distribution maintainence price wise") 
+  labs(x = "has_nurs", y = "class",
+        title = "class distribution has_nurs wise") 
 
-ggplot(data = class.maint, mapping = aes(x = maint, y = number, fill = class)) +
+ggplot(data = class.nurs, mapping = aes(x = has_nurs, y = number, fill = class)) +
   geom_col(position = "dodge") +
-  labs(x = "maint", y = "class",
-        title = "class distribution maint price wise") 
+  labs(x = "has_nurs", y = "class",
+        title = "class distribution has_nurs wise") 
 
-ggplot(data = class.maint, mapping = aes(x = maint, y = number, fill = class)) +
+ggplot(data = class.nurs, mapping = aes(x = has_nurs, y = number, fill = class)) +
   geom_col() +
   facet_wrap(~class,ncol = 1)
-  labs(x = "maint", y = "class",
-        title = "class distribution doors number wise") 
+  labs(x = "has_nurs", y = "class",
+        title = "class distribution parents wise") 
 
-  #third variable doors
-  class.doors<- table(car$class,car$doors)
- class.doors <- as.data.frame( class.doors)
- colnames(class.doors) <- c("class", "doors", "number")
+  #third variable form
+ class.form<- table(nursery$class,nursery$form)
+ class.form <- as.data.frame( class.form)
+ colnames(class.form) <- c("class", "form", "number")
 
- ggplot(data = class.doors, mapping = aes(x = doors, y = number, fill = class)) +
+ ggplot(data = class.form, mapping = aes(x = form, y = number, fill = class)) +
   geom_col() +
-  labs(x = "doors", y = "class",
-        title = "class distribution doors number wise") 
+  labs(x = "form", y = "class",
+        title = "class distribution form wise") 
 
-ggplot(data = class.doors, mapping = aes(x = doors, y = number, fill = class)) +
+ggplot(data = class.form, mapping = aes(x = form, y = number, fill = class)) +
   geom_col(position = "dodge") +
-  labs(x = "doors", y = "class",
-        title = "class distribution doors number wise") 
+  labs(x = "form", y = "class",
+        title = "class distribution form wise") 
 
-ggplot(data = class.doors, mapping = aes(x = doors, y = number, fill = class)) +
+ggplot(data = class.form, mapping = aes(x = form, y = number, fill = class)) +
   geom_col() +
   facet_wrap(~class,ncol = 1)
-  labs(x = "doors", y = "class",
-        title = "class distribution doors number wise") 
+  labs(x = "form", y = "class",
+        title = "class distribution form wise") 
 
+#fourth variable children
+   class.children<- table(nursery$class,nursery$children)
+ class.children <- as.data.frame( class.children)
+ colnames(class.children) <- c("class", "children", "number")
 
-#fourth variable persons
-  class.persons<- table(car$class,car$persons)
- class.persons <- as.data.frame( class.persons)
- colnames(class.persons) <- c("class", "persons", "number")
-
- ggplot(data = class.persons, mapping = aes(x = persons, y = number, fill = class)) +
+ ggplot(data = class.children, mapping = aes(x = children, y = number, fill = class)) +
   geom_col() +
-  labs(x = "persons", y = "class",
-        title = "class distribution persons number wise") 
+  labs(x = "children", y = "class",
+        title = "class distribution children wise") 
 
-ggplot(data = class.persons, mapping = aes(x = persons, y = number, fill = class)) +
+ggplot(data = class.children, mapping = aes(x = children, y = number, fill = class)) +
   geom_col(position = "dodge") +
-  labs(x = "persons", y = "class",
-        title = "class distribution persons number wise") 
+  labs(x = "children", y = "class",
+        title = "class distribution children wise") 
 
-ggplot(data = class.persons, mapping = aes(x = persons, y = number, fill = class)) +
+ggplot(data = class.children, mapping = aes(x = children, y = number, fill = class)) +
   geom_col() +
   facet_wrap(~class,ncol = 1)
-  labs(x = "persons", y = "class",
-        title = "class distribution persons number wise") 
+  labs(x = "children", y = "class",
+        title = "class distribution children wise") 
+#5th variable  housing
+    class.housing<- table(nursery$class,nursery$housing)
+ class.housing <- as.data.frame( class.housing)
+ colnames(class.housing) <- c("class", "housing", "number")
+
+ ggplot(data = class.housing, mapping = aes(x = housing, y = number, fill = class)) +
+  geom_col() +
+  labs(x = "housing", y = "class",
+        title = "class distribution housing wise") 
+
+ggplot(data = class.housing, mapping = aes(x = housing, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "housing", y = "class",
+        title = "class distribution housing wise") 
+
+ggplot(data = class.housing, mapping = aes(x = housing, y = number, fill = class)) +
+  geom_col() +
+  facet_wrap(~class,ncol = 1)
+  labs(x = "housing", y = "class",
+        title = "class distribution housing wise") 
   
-#5th variable  persons
-  class.lug<- table(car$class,car$lug.boot)
- class.lug <- as.data.frame( class.lug)
- colnames(class.lug) <- c("class", "lug", "number")
+  #6th var finance
+  class.finance<- table(nursery$class,nursery$finance)
+ class.finance <- as.data.frame( class.finance)
+ colnames(class.finance) <- c("class", "finance", "number")
 
- ggplot(data = class.lug, mapping = aes(x = lug, y = number, fill = class)) +
+ ggplot(data = class.finance, mapping = aes(x = finance, y = number, fill = class)) +
   geom_col() +
-  labs(x = "lug", y = "class",
-        title = "class distribution lug space wise") 
+  labs(x = "finance", y = "class",
+        title = "class distribution finance wise") 
 
-ggplot(data = class.lug, mapping = aes(x = lug, y = number, fill = class)) +
+ggplot(data = class.finance, mapping = aes(x = finance, y = number, fill = class)) +
   geom_col(position = "dodge") +
-  labs(x = "lug", y = "class",
-        title = "class distribution lug space wise") 
+  labs(x = "finance", y = "class",
+        title = "class distribution finace wise") 
 
-ggplot(data = class.lug, mapping = aes(x = lug, y = number, fill = class)) +
+ggplot(data = class.finance, mapping = aes(x = finance, y = number, fill = class)) +
   geom_col() +
   facet_wrap(~class,ncol = 1)
-  labs(x = "lug", y = "class",
-        title = "class distribution lug space wise") 
+  labs(x = "finance", y = "class",
+        title = "class distribution finance wise") 
   
-  #6th var safety
-   class.safety<- table(car$class,car$safety)
- class.safety <- as.data.frame( class.safety)
- colnames(class.safety) <- c("class", "safety", "number")
+#7th variable social
+  class.social<- table(nursery$class,nursery$social)
+ class.social <- as.data.frame( class.social)
+ colnames(class.social) <- c("class", "social", "number")
 
- ggplot(data = class.safety, mapping = aes(x = safety, y = number, fill = class)) +
+ ggplot(data = class.social, mapping = aes(x = social, y = number, fill = class)) +
   geom_col() +
-  labs(x = "safety", y = "class",
-        title = "class distribution safety wise") 
+  labs(x = "social", y = "class",
+        title = "class distribution social wise") 
 
-ggplot(data = class.safety, mapping = aes(x = safety, y = number, fill = class)) +
+ggplot(data = class.social, mapping = aes(x = social, y = number, fill = class)) +
   geom_col(position = "dodge") +
-  labs(x = "safety", y = "class",
-        title = "class distribution safety wise") 
+  labs(x = "social", y = "class",
+        title = "class distribution social wise") 
 
-ggplot(data = class.safety, mapping = aes(x = safety, y = number, fill = class)) +
+ggplot(data = class.social, mapping = aes(x = social, y = number, fill = class)) +
   geom_col() +
   facet_wrap(~class,ncol = 1)
-  labs(x = "safety", y = "class",
-        title = "class distribution safety wise") 
+  labs(x = "social", y = "class",
+        title = "class distribution social wise") 
+  
+  #8th variable health
+  class.health<- table(nursery$class,nursery$health)
+ class.health <- as.data.frame( class.health)
+ colnames(class.health) <- c("class", "health", "number")
+
+ ggplot(data = class.health, mapping = aes(x = health, y = number, fill = class)) +
+  geom_col() +
+  labs(x = "health", y = "class",
+        title = "class distribution social wise") 
+
+ggplot(data = class.health, mapping = aes(x = health, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "health", y = "class",
+        title = "class distribution social wise") 
+
+ggplot(data = class.health, mapping = aes(x = health, y = number, fill = class)) +
+  geom_col() +
+  facet_wrap(~class,ncol = 1)
+  labs(x = "health", y = "class",
+        title = "class distribution health wise")  
+  
   #start formal analysis now
-  
-  
-  # nueral network,svm
-  #apply multinomial
+  #remove outliers
+  mean(nursery$class=="recommend")
+  nursery<- subset(nursery, class!="recommend")
   
   #dividing the data set into training and testing sub datasets
 
-n <- dim(car)[1]
+n <- dim(nursery)[1]
 set.seed(1)
 ind <- sample(c(1:n),0.6*n) # 60%-40% training and test split
-car.train <- car[ ind,] 
-car.test <- car[-ind,]
+nursery.train <- nursery[ ind,] 
+nursery.test <- nursery[-ind,]
 
-c1 <- multinom( class ~ .,data = car.train,maxit = 1000)
+nursery.mul <- multinom( class ~ .,data = nursery.train,maxit = 1000)
 
-summary(c1)
+summary(nursery.mul)
 
-mean(car.train$class==predict(c1))
-mean(car.test$class==predict(c1,car.test))
+mean(as.character(nursery.train$class)==as.character(predict(nursery.mul)))
+mean(as.character(nursery.test$class)==as.character(predict(nursery.mul,nursery.test)))
 
 
 #apply randomforest
-car.raf <- randomForest(class~., data = car.train, ntree = 200)
-print(car.raf)
-importance(car.raf)
-varImpPlot(car.raf)
+nursery.train <- droplevels(nursery.train )
+nursery.raf <- randomForest(class~., data = nursery.train, ntree = 200)
+print(nursery.raf)
+importance(nursery.raf)
+varImpPlot(nursery.raf)
 
-mean(car.train$class==predict(car.raf))
-mean(car.test$class==predict(car.raf,car.test))
+mean(as.character(nursery.train$class)==as.character(predict(nursery.raf)))
+mean(as.character(nursery.test$class)==as.character(predict(nursery.raf,nursery.test)))
 
 #apply  neural network
 
-car_matrix <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.train)
-car_matrix <- car_matrix[,-1]
+nursery_matrix <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nursery.train)
+nursery_matrix <- nursery_matrix[,-1]
 
 
-f <- paste(colnames(car_matrix_final[,1:15]),collapse="+")
-trainData <- cbind(class.ind(car.train$class),car_matrix)
+
+trainData <- cbind(class.ind(nursery.train$class),nursery_matrix)
 head(trainData)
 
-#best 434, 442, 542,554,534,535,443,344,354**,353***,343**,334**,
+#best 55***, 54,53***,
 set.seed(81)
-nn_car1 <- neuralnet( acc+good+unacc+vgood~.,data = trainData ,hidden = c(3,5,3) ,linear.output=FALSE,err.fct='ce')
+nn_nursery <- neuralnet( not_recom+priority+spec_prior+very_recom~.,data = trainData ,hidden = c(5,3) ,linear.output=FALSE,err.fct='ce')
 
 
-plot(nn_car1)
+plot(nn_nursery)
 
 original_values <- max.col(trainData[,c(1:4)])
-predictions <- max.col(nn_car1$net.result[[1]])
+predictions <- max.col(nn_nursery$net.result[[1]])
 mean(original_values==predictions)
 #prepare test data
-car_matrix1 <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.test)
-car_matrix1 <- car_matrix1[,-1]
-testData <- cbind(class.ind(car.test$class),car_matrix1)
+nursery_matrix1 <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nursery.test)
+nursery_matrix1 <- nursery_matrix1[,-1]
+testData <- cbind(class.ind(nursery.test$class),nursery_matrix1)
 
-compute_test <- neuralnet::compute(nn_car1,testData[, 5:19])
+compute_test <- neuralnet::compute(nn_nursery,testData[,6:24])
 predictions_test <- max.col(compute_test$net.result)
-original_values <- max.col(testData[,c(1:4)])
+original_values <- max.col(testData[,c(1,2,4,5)])
 mean(original_values==predictions_test)
 
   
 ```
 
+```{r Exploratory & formal analysis contra, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+skim(contra)
+contra$w.education <-as.factor(contra$w.education)
+contra$h.education <-as.factor(contra$h.education)
+contra$religion <-as.factor(contra$religion)
+contra$working <-as.factor(contra$working)
+contra$occupation<- as.factor(contra$occupation)
+contra$standard<- as.factor(contra$standard)
+contra$media <-as.factor(contra$media)
+contra$contraceptive<- as.factor(contra$contraceptive)
+
+tab2 <- table(contra$contraceptive)
+tab2<- as.data.frame(tab2)
+colnames(tab2) <- c("contraceptive", "number")
+
+ggplot(data = tab2, mapping = aes(x =contraceptive, y = number)) +
+  geom_col()
+
+contra %>%
+  ggplot(aes(x = contraceptive,y = age)) +
+  geom_boxplot() +
+  labs(x = "contraceptive", y = "wife age",title="Boxplot of contraceptive vs wife age")
+  
+contra %>%
+  ggplot(aes(x = contraceptive,y = children)) +
+  geom_boxplot() +
+  labs(x = "contraceptive", y = "children",title="Boxplot of contraceptive vs number of children")
+#first variable wife education
+  contra.wife<- table(contra$contraceptive,contra$w.education)
+ contra.wife <- as.data.frame( contra.wife)
+ colnames(contra.wife) <- c("contra", "w.education", "number")
+
+ ggplot(data = contra.wife, mapping = aes(x = w.education, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "wife education", y = "contraceptive",
+        title = "contraceptive distribution wife education wise") 
+
+ggplot(data = contra.wife, mapping = aes(x = w.education, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "wife education", y = "contraceptive",
+        title = "contraceptive distribution wife education wise") 
+
+ggplot(data = contra.wife, mapping = aes(x = w.education, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "wife education", y = "contraceptive",
+        title = "contraceptive distribution wife education wise")  
+
+#second variable husband education
+  contra.husband<- table(contra$contraceptive,contra$h.education)
+ contra.husband <- as.data.frame( contra.husband)
+ colnames(contra.husband) <- c("contra", "h.education", "number")
+
+ ggplot(data = contra.husband, mapping = aes(x = h.education, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "husband education", y = "contraceptive",
+        title = "contraceptive distribution husband education wise") 
+
+ggplot(data = contra.husband, mapping = aes(x = h.education, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "husband education", y = "contraceptive",
+        title = "contraceptive distribution husband education wise") 
+
+ggplot(data = contra.husband, mapping = aes(x = h.education, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "husband education", y = "contraceptive",
+        title = "contraceptive distribution husband education wise")  
+
+
+#third variable Wife's religion
+  contra.religion<- table(contra$contraceptive,contra$religion)
+ contra.religion <- as.data.frame( contra.religion)
+ colnames(contra.religion) <- c("contra", "religion", "number")
+
+ ggplot(data = contra.religion, mapping = aes(x = religion, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "religion", y = "contraceptive",
+        title = "contraceptive distribution wife relision wise") 
+
+ggplot(data = contra.religion, mapping = aes(x = religion, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "wife religion", y = "contraceptive",
+        title = "contraceptive distribution wife religion wise") 
+
+ggplot(data = contra.religion, mapping = aes(x =religion, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "religion", y = "contraceptive",
+        title = "contraceptive distribution religion wise")  
+
+#forth variable Wife's now working
+  contra.work<- table(contra$contraceptive,contra$working)
+ contra.work <- as.data.frame( contra.work)
+ colnames(contra.work) <- c("contra", "work", "number")
+
+ ggplot(data = contra.work, mapping = aes(x = work, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "work", y = "contraceptive",
+        title = "contraceptive distribution wife working wise") 
+
+ggplot(data = contra.work, mapping = aes(x = work, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "wife working", y = "contraceptive",
+        title = "contraceptive distribution wife working wise") 
+
+ggplot(data = contra.work, mapping = aes(x =work, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "work", y = "contraceptive",
+        title = "contraceptive distribution wife working wise")  
+  
+
+#fifth variable husband ocupation
+  contra.occupation<- table(contra$contraceptive,contra$occupation)
+ contra.occupation <- as.data.frame( contra.occupation)
+ colnames(contra.occupation) <- c("contra", "occupation", "number")
+
+ ggplot(data = contra.occupation, mapping = aes(x = occupation, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise") 
+
+ggplot(data = contra.occupation, mapping = aes(x = occupation, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise") 
+
+ggplot(data = contra.occupation, mapping = aes(x =occupation, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise")  
+  
+#fifth variable husband ocupation
+  contra.occupation<- table(contra$contraceptive,contra$occupation)
+ contra.occupation <- as.data.frame( contra.occupation)
+ colnames(contra.occupation) <- c("contra", "occupation", "number")
+
+ ggplot(data = contra.occupation, mapping = aes(x = occupation, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise") 
+
+ggplot(data = contra.occupation, mapping = aes(x = occupation, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise") 
+
+ggplot(data = contra.occupation, mapping = aes(x =occupation, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise")  
+  
+#fifth variable husband ocupation
+  contra.occupation<- table(contra$contraceptive,contra$occupation)
+ contra.occupation <- as.data.frame( contra.occupation)
+ colnames(contra.occupation) <- c("contra", "occupation", "number")
+
+ ggplot(data = contra.occupation, mapping = aes(x = occupation, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise") 
+
+ggplot(data = contra.occupation, mapping = aes(x = occupation, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise") 
+
+ggplot(data = contra.occupation, mapping = aes(x =occupation, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "occupation", y = "contraceptive",
+        title = "contraceptive distribution husband occupation wise")  
+  
+#6th variable Standard-of-living index 
+  contra.standard<- table(contra$contraceptive,contra$standard)
+ contra.standard <- as.data.frame( contra.standard)
+ colnames(contra.standard) <- c("contra", "standard", "number")
+
+ ggplot(data = contra.standard, mapping = aes(x = standard, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "standard", y = "contraceptive",
+        title = "contraceptive distribution living standard wise") 
+
+ggplot(data = contra.standard, mapping = aes(x = standard, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "standard", y = "contraceptive",
+        title = "contraceptive distribution living standard wise") 
+
+ggplot(data = contra.standard, mapping = aes(x =standard, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "standard", y = "contraceptive",
+        title = "contraceptive distribution standard wise")  
+  
+
+#7th variable Media exposure
+  contra.media<- table(contra$contraceptive,contra$media)
+ contra.media <- as.data.frame( contra.media)
+ colnames(contra.media) <- c("contra", "media", "number")
+
+ ggplot(data = contra.media, mapping = aes(x = media, y = number, fill =contra )) +
+  geom_col() +
+  labs(x = "media", y = "contraceptive",
+        title = "contraceptive distribution media exposure wise") 
+
+ggplot(data = contra.media, mapping = aes(x = media, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "media", y = "contraceptive",
+        title = "contraceptive distribution media exposure wise") 
+
+ggplot(data = contra.media, mapping = aes(x =media, y = number, fill = contra)) +
+  geom_col() +
+  facet_wrap(~contra,ncol = 1)
+  labs(x = "media", y = "contraceptive",
+        title = "contraceptive distribution media exposure wise")  
+  
+#apply formal analysis
+   #dividing the data set into training and testing sub datasets
+
+n <- dim(contra)[1]
+set.seed(1)
+ind <- sample(c(1:n),0.6*n) # 60%-40% training and test split
+contra.train <- contra[ ind,] 
+contra.test <- contra[-ind,]
+
+contra.mul <- multinom( contraceptive ~ .,data = contra.train,maxit = 1000)
+
+summary(contra.mul)
+
+mean(as.character(contra.train$contraceptive)==as.character(predict(contra.mul)))
+mean(as.character(contra.test$contraceptive)==as.character(predict(contra.mul,contra.test)))
+
+
+#apply randomforest
+nursery.train <- droplevels(nursery.train )
+nursery.raf <- randomForest(class~., data = nursery.train, ntree = 200)
+print(nursery.raf)
+importance(nursery.raf)
+varImpPlot(nursery.raf)
+
+mean(as.character(nursery.train$class)==as.character(predict(nursery.raf)))
+mean(as.character(nursery.test$class)==as.character(predict(nursery.raf,nursery.test)))
+
+#apply  neural network
+
+nursery_matrix <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nursery.train)
+nursery_matrix <- nursery_matrix[,-1]
+
+
+
+trainData <- cbind(class.ind(nursery.train$class),nursery_matrix)
+head(trainData)
+
+#best 55***, 54,53***,
+set.seed(81)
+nn_nursery <- neuralnet( not_recom+priority+spec_prior+very_recom~.,data = trainData ,hidden = c(5,3) ,linear.output=FALSE,err.fct='ce')
+
+
+plot(nn_nursery)
+
+original_values <- max.col(trainData[,c(1:4)])
+predictions <- max.col(nn_nursery$net.result[[1]])
+mean(original_values==predictions)
+#prepare test data
+nursery_matrix1 <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nursery.test)
+nursery_matrix1 <- nursery_matrix1[,-1]
+testData <- cbind(class.ind(nursery.test$class),nursery_matrix1)
+
+compute_test <- neuralnet::compute(nn_nursery,testData[,6:24])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1,2,4,5)])
+mean(original_values==predictions_test)
+
+
+
+
+
+```
