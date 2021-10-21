@@ -63,57 +63,87 @@ nursery[sapply(nursery,is.character)]<-lapply(nursery[sapply(nursery,is.characte
 ```{r Exploratory & formal analysis ablone, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 skim(ablone)
 
+tab <- table(ablone$rings)
+tab<- as.data.frame(tab)
+colnames(tab) <- c("rings", "number")
+
+ggplot(data = tab, mapping = aes(x =rings, y = number)) +
+  geom_col()
+
+ablone %>%
+  tabyl(rings,sex) %>%
+  adorn_percentages() %>%
+  adorn_pct_formatting() %>%
+  adorn_ns()
+
+rings.sex<- table(ablone$rings,ablone$sex)
+ rings.sex <- as.data.frame( rings.sex)
+ colnames(rings.sex) <- c("rings", "sex", "number")
+
+ ggplot(data = rings.sex, mapping = aes(x = rings, y = number, fill = sex)) +
+  geom_col() +
+  labs(x = "rings", y = "sex",
+        title = "rings distribution sex wise") 
+
+ggplot(data = rings.sex, mapping = aes(x = rings, y = number, fill = sex)) +
+  geom_col(position = "dodge") +
+  labs(x = "rings", y = "sex",
+        title = "rings distribution  sex wise") 
+
+ggplot(data = rings.sex, mapping = aes(x = rings, y = number, fill = sex)) +
+  geom_col() +
+  facet_wrap(~sex,ncol = 1)
+  labs(x = "rings", y = "sex",
+        title = "rings distribution sex wise") 
+
+
 ablone %>%
   ggplot(aes(x = rings,y = length),color = sex) +
   geom_boxplot() +
   facet_wrap("sex")
-  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
   
   
 ablone %>%
   ggplot(aes(x = rings,y = ablone$diameter),color = sex) +
   geom_boxplot() +
   facet_wrap("sex")
-  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
   
 ablone %>%
   ggplot(aes(x = rings,y = ablone$height),color = sex) +
   geom_boxplot() +
   facet_wrap("sex")
-  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
   
 ablone %>%
   ggplot(aes(x = rings,y = ablone$whole.weight),color = sex) +
   geom_boxplot() +
   facet_wrap("sex")
-  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
   
 ablone %>%
   ggplot(aes(x = rings,y = ablone$shucked.weight),color = sex) +
   geom_boxplot() +
   facet_wrap("sex")
-  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
 
 ablone %>%
   ggplot(aes(x = rings,y = ablone$viscera.weight),color = sex) +
   geom_boxplot() +
   facet_wrap("sex")
-  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
   
 ablone %>%
   ggplot(aes(x = rings,y = ablone$shell.weight),color = sex) +
   geom_boxplot() +
   facet_wrap("sex")
-  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings")
+  labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
   
  
 
   
-ablone %>%
-  tabyl(rings,sex) %>%
-  adorn_percentages() %>%
-  adorn_pct_formatting() %>%
-  adorn_ns()
+
 
 ablone %>%
   select(-c(sex,rings))%>%
@@ -918,43 +948,58 @@ mean(as.character(contra.test$contraceptive)==as.character(predict(contra.mul,co
 
 
 #apply randomforest
-nursery.train <- droplevels(nursery.train )
-nursery.raf <- randomForest(class~., data = nursery.train, ntree = 200)
-print(nursery.raf)
-importance(nursery.raf)
-varImpPlot(nursery.raf)
+contra.train <- droplevels(contra.train )
+contra.raf <- randomForest(contraceptive~., data = contra.train, ntree = 200)
+print(contra.raf)
+importance(contra.raf)
+varImpPlot(contra.raf)
 
-mean(as.character(nursery.train$class)==as.character(predict(nursery.raf)))
-mean(as.character(nursery.test$class)==as.character(predict(nursery.raf,nursery.test)))
+mean(as.character(contra.train$contraceptive)==as.character(predict(contra.raf)))
+mean(as.character(contra.test$contraceptive)==as.character(predict(contra.raf,contra.test)))
 
 #apply  neural network
 
-nursery_matrix <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nursery.train)
-nursery_matrix <- nursery_matrix[,-1]
+
+
+contra_matrix <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.train)
+contra_matrix <- contra_matrix[,-1]
 
 
 
-trainData <- cbind(class.ind(nursery.train$class),nursery_matrix)
+trainData <- cbind(class.ind(contra.train$contraceptive),contra_matrix,contra.train$age,contra.train$children)
+#scaling
+maxs <- apply(trainData[,c(19,20)], 2, max)
+mins <- apply(trainData[,c(19,20)], 2, min)
+trainData[,c(19,20)]<-scale(trainData[,19:20], center = mins, scale = maxs - mins)
+
 head(trainData)
 
-#best 55***, 54,53***,
-set.seed(81)
-nn_nursery <- neuralnet( not_recom+priority+spec_prior+very_recom~.,data = trainData ,hidden = c(5,3) ,linear.output=FALSE,err.fct='ce')
-
-
-plot(nn_nursery)
-
-original_values <- max.col(trainData[,c(1:4)])
-predictions <- max.col(nn_nursery$net.result[[1]])
-mean(original_values==predictions)
 #prepare test data
-nursery_matrix1 <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nursery.test)
-nursery_matrix1 <- nursery_matrix1[,-1]
-testData <- cbind(class.ind(nursery.test$class),nursery_matrix1)
+contra_matrix1 <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.test)
+contra_matrix1 <- contra_matrix1[,-1]
+testData <- cbind(class.ind(contra.test$contraceptive),contra_matrix1,contra.test$age,contra.test$children)
 
-compute_test <- neuralnet::compute(nn_nursery,testData[,6:24])
+#scaling
+maxs <- apply(testData[,c(19,20)], 2, max)
+mins <- apply(testData[,c(19,20)], 2, min)
+testData[,19:20]<-scale(testData[,19:20], center = mins, scale = maxs - mins)
+
+
+#best 6,4,5
+set.seed(81)
+nn_contra <- neuralnet( `1`+`2`+`3`~.,data = trainData ,hidden = c(6) ,linear.output=FALSE,err.fct='ce')
+
+
+plot(nn_contra)
+
+original_values <- max.col(trainData[,c(1:3)])
+predictions <- max.col(nn_contra$net.result[[1]])
+mean(original_values==predictions)
+
+
+compute_test <- neuralnet::compute(nn_contra,testData[,4:20])
 predictions_test <- max.col(compute_test$net.result)
-original_values <- max.col(testData[,c(1,2,4,5)])
+original_values <- max.col(testData[,c(1,2,3)])
 mean(original_values==predictions_test)
 
 
