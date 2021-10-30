@@ -12,7 +12,7 @@ fig_caption: yes
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+#work left, commenting, additing proporation table, start making a ppt
 
 ```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
