@@ -37,6 +37,7 @@ library(neuralnet)
 library(nnet)
 library(VGAM)
 library(NeuralNetTools)
+library(MASS)
 ```
 
 
@@ -140,12 +141,7 @@ ablone %>%
   facet_wrap("sex")
   labs(x = "ablone rings", y = "length",title="Boxplot of ablone length vs rings for different sex")
   
- 
-
-  
-
-
-ablone %>%
+ ablone %>%
   select(-c(sex,rings))%>%
   ggpairs()
 
@@ -209,12 +205,22 @@ m1 <- multinom( rings ~ .,data = ablone.train,maxit = 1000)
 
 summary(m1)
 
+
+
 #performance checking for simple multinomial
 
 sum(as.character(ablone.test$rings)!=as.character(predict(m1,ablone.test)))*100/dim(ablone.test)[1]
 
 sum(as.character(ablone.train$rings)!=as.character(predict(m1)))*100/dim(ablone.train)[1]
 
+
+#variable selection
+step_both <- stepAIC(m1, direction="both")
+summary(step_both)
+
+sum(as.character(ablone.test$rings)!=as.character(predict(step_both,ablone.test)))*100/dim(ablone.test)[1]
+
+sum(as.character(ablone.train$rings)!=as.character(predict(step_both)))*100/dim(ablone.train)[1]
 
 
 m2 <- multinom( ablone.train$rings~ablone.pca$scores[ind,1]+ablone.pca$scores[ind,2] + ablone.train$sex,maxit = 1000)
@@ -439,6 +445,12 @@ summary(c1)
 
 mean(car.train$class!=predict(c1))
 mean(car.test$class!=predict(c1,car.test))
+
+#variable selection
+step_both_car <- stepAIC(c1, direction="both")
+mean(car.train$class!=predict(step_both_car))
+mean(car.test$class!=predict(step_both_car,car.test))
+
 
 
 #apply randomforest
@@ -684,6 +696,11 @@ summary(nursery.mul)
 
 mean(as.character(nursery.train$class)!=as.character(predict(nursery.mul)))
 mean(as.character(nursery.test$class)!=as.character(predict(nursery.mul,nursery.test)))
+
+#variable selection
+step_both_nur <- stepAIC(nursery.mul, direction="both")
+mean(as.character(nursery.train$class)!=as.character(predict(step_both_nur)))
+mean(as.character(nursery.test$class)!=as.character(predict(step_both_nur,nursery.test)))
 
 
 #apply randomforest
@@ -968,6 +985,11 @@ summary(contra.mul)
 mean(as.character(contra.train$contraceptive)!=as.character(predict(contra.mul)))
 mean(as.character(contra.test$contraceptive)!=as.character(predict(contra.mul,contra.test)))
 
+
+#variable selection
+step_both_con <- stepAIC(contra.mul, direction="both")
+mean(as.character(contra.train$contraceptive)!=as.character(predict(step_both_con)))
+mean(as.character(contra.test$contraceptive)!=as.character(predict(step_both_con,contra.test)))
 
 #apply randomforest
 contra.train <- droplevels(contra.train )
