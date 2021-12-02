@@ -1,4 +1,4 @@
-Supervised statistical classification-Multinomial
+Supervised Statistical Classification-Multinomial
 ================
 Suraj Kumar
 03/12/2021
@@ -65,6 +65,12 @@ the work.
 
 # Description of the Methods
 
+The cornerstone of the formal analysis is based upon required
+statistical classification methods such as multinomial regression,
+randomForest, and neural networks. Additionally, principal components
+analysis and variable selection have been used as supplementary to the
+multinomial process.
+
 ## Multinomial Regression
 
 Nominal logistic regression models for more than two categories can be
@@ -86,7 +92,7 @@ its greedy nature, different wrapper methods can give different results.
 Additionally, they are prone to over-fitting and have high computation
 time.
 
-## Principle Component Analysis
+## Principal Component Analysis
 
 PCA is a robust unsupervised machine learning algorithm for feature
 extraction. The method is useful when a significant correlation is
@@ -109,7 +115,462 @@ handles missing data, mixed datasets, and multicollinearity.
 
 ## Neural Network
 
+The neural network has garnered the attention of the whole world in
+every sector as more and more data are available for training. The
+method is very effective in modeling the complex non-linear
+relationships among data features. The hyperparameter for the hidden
+layer needs to be carefully adjusted for every dataset to avoid
+overfitting and to model appropriately. Feedforward neural networks are
+most common in applications. It attempts to find a locally optimal
+solution based on initial reference using gradient descent and
+backpropagation.
+
 # Exploratory Analysis
+
+## Abalone dataset
+
+<table style="width: auto;" class="table table-condensed">
+<caption>
+Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+ablone
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+4177
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+None
+</td>
+</tr>
+</tbody>
+</table>
+
+**Variable type: factor**
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim\_variable
+</th>
+<th style="text-align:right;">
+n\_missing
+</th>
+<th style="text-align:right;">
+complete\_rate
+</th>
+<th style="text-align:left;">
+ordered
+</th>
+<th style="text-align:right;">
+n\_unique
+</th>
+<th style="text-align:left;">
+top\_counts
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+sex
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+M: 1528, I: 1342, F: 1307
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rings
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:left;">
+9: 689, 10: 634, 8: 568, 11: 487
+</td>
+</tr>
+</tbody>
+</table>
+
+**Variable type: numeric**
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim\_variable
+</th>
+<th style="text-align:right;">
+n\_missing
+</th>
+<th style="text-align:right;">
+complete\_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+length
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.52
+</td>
+<td style="text-align:right;">
+0.12
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+0.54
+</td>
+<td style="text-align:right;">
+0.62
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+<td style="text-align:left;">
+▁▂▅▇▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+diameter
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.41
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+<td style="text-align:right;">
+0.42
+</td>
+<td style="text-align:right;">
+0.48
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:left;">
+▁▂▆▇▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+height
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.12
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+1.13
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+whole.weight
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.83
+</td>
+<td style="text-align:right;">
+0.49
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+<td style="text-align:right;">
+0.80
+</td>
+<td style="text-align:right;">
+1.15
+</td>
+<td style="text-align:right;">
+2.83
+</td>
+<td style="text-align:left;">
+▇▇▅▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shucked.weight
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.36
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+<td style="text-align:right;">
+0.34
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+1.49
+</td>
+<td style="text-align:left;">
+▇▇▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+viscera.weight
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.09
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+0.76
+</td>
+<td style="text-align:left;">
+▇▇▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shell.weight
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.24
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+▇▇▂▁▁
+</td>
+</tr>
+</tbody>
+</table>
 
 # Formal Analysis
 

@@ -1,14 +1,22 @@
 ---
-title: 'Supervised statistical classification-Multinomial'
-author: "Suraj Kumar"
+title: 'Supervised Statistical Classification-Multinomial'
+author: "Suraj Kumar(2601477K)"
 date: "03/12/2021"
-output: pdf_document
-
+output: 
+  bookdown::pdf_document2:
+    latex_engine: xelatex
 number_sections: yes
 always_allow_html: true
-
+geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
 fig_caption: yes
+
+
 ---
+<style type="text/css">
+  body{
+  font-size: 12pt;
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -41,23 +49,28 @@ library(nnet)
 library(VGAM)
 library(NeuralNetTools)
 library(MASS)
+library(cvms)
 ```
+\newpage
 # Introduction {#sec:Intro}
 ## Background
-Supervised multinomial classification is an essential aspect of Machine Learning. Sectors such as Business analysts, Data scientists, Financial analysts, and medicine are required to predict the data category based on feature instance vectors. The simple multinomial regression model is the most fundamental statistical method to serve the purpose; however, several advanced classification models such as RandomForest, and Neural Network have evolved over the years, which have brought a revolution in prediction accuracy. RandomForest has a very versatile application based on a decision tree hierarchy. On the other side, Neural network performance has improved over a few decades as more and more data are available for training. Performance comparison is a crucial aspect of choosing the best Statistical model for data. Overall classification accuracy and group-specific classification accuracy are the two most prominent used performance measures for supervised multinomial classification. 
+Supervised multinomial classification is an essential aspect of Machine Learning. Sectors such as Business analysts, Data scientists, Financial analysts, and medicine are required to predict the data category based on feature instance vectors. The simple multinomial regression model is the most fundamental statistical method to serve the purpose; however, several advanced classification models such as RandomForest, and Neural Network have evolved over the years, which have brought a revolution in prediction accuracy. RandomForest has a very versatile application based on a decision tree hierarchy. On the other side, Neural network performance has improved over a few decades as more and more data are available for training. Performance comparison is a crucial aspect of choosing the best statistical model for data. Overall classification accuracy and group-specific classification accuracy are the two most prominent used performance measures for supervised multinomial classification. 
 
 ## Aim of Analysis
 The research project aims to evaluate the best multinomial classification models based on some performance measure criteria. Specifically, the main objectives are to design a study to access performance in classification, measure the performance of a simple multinomial regression model, and compare the performance to that of other statistical methods. 
 
-## Workflow and Data Descriptions
-The study goes through exploratory and formal data analysis of 4 datasets; Abalone, Car evaluation, Nursery school application, and Contraceptive method choice. All of the datasets have multi-class categorical output and a set of covariates. The aim of the analysis is specific for each dataset; predicting the age of abalone from physical
-measurements for Abalone dataset; predicting the car acceptability for given features of cars for Car dataset; predicting the contraceptive method choice of women based on several characteristics about women for Contraceptive method choice dataset; predicting success or failure of nursery class application provided socio-demographic information of the parents for Nursery dataset. The datasets have been sampled at different locations and sectors through a randomized method. The abalone dataset has been sampled from the Abalone population in Tasmania. I. Blacklip and Abalone found in North Coast and Islands of Bass Strait; the car evaluation dataset has been obtained from a simple hierarchical decision model previously developed for the demonstration of DEX; the contraceptive method choice dataset has been collected from a part of the 1987 National Indonesia Contraceptive Prevalence Survey; the nursery dataset has been obtained from the applications of nursery schools in Ljubljana, Slovenia. This report focuses on box plots, summaries, scatterplots, histograms, bar plots, and proportional tables to develop initial impressions about the data in section \ref{sec:expo}. While the study deepens on designing a performance measure, fitting multinomial regression, Random forest, and Neural network to each dataset, and comparing the outcomes in section \ref{sec:formal}. \ref{sec:method} describes all the methods used to achieve the goals. Eventually, the \ref{sec:con} section details the remark extracted from the overall analysis, and \ref{sec:ext} section discusses the possible future extension in the work. 
+## Workflow 
+The study goes through exploratory and formal data analysis of 4 datasets; Abalone, Car evaluation, Nursery school application, and Contraceptive method choice. All of the datasets have multi-class categorical output and a set of covariates.  This report focuses on box plots, summaries, scatterplots, histograms, bar plots, and proportional tables to develop initial impressions about the data in section \ref{sec:expo}. While the study deepens on designing a performance measure, fitting multinomial regression, Random forest, and Neural network to each dataset, and comparing the outcomes in section \ref{sec:formal}. \ref{sec:method}nd section explains the background and motivation for the methods. Eventually, \ref{sec:con}th section concludes the remark extracted from the overall analysis, and \ref{sec:ext}th section discusses the possible future extension in the work. 
 
+## Data Descriptions
+The aim of the analysis is specific for each dataset; predicting the age of abalone from physical
+measurements for Abalone dataset; predicting the car acceptability for given features of cars for Car dataset; predicting the contraceptive method choice of women based on several characteristics about women for Contraceptive method choice dataset; predicting success or failure of nursery class application provided socio-demographic information of the parents for Nursery dataset. The datasets have been sampled at different locations and sectors through a randomized method. The abalone dataset has been sampled from the Abalone population in Tasmania. I. Blacklip and Abalone found in North Coast and Islands of Bass Strait; the car evaluation dataset has been obtained from a simple hierarchical decision model previously developed for the demonstration of DEX; the contraceptive method choice dataset has been collected from a part of the 1987 National Indonesia Contraceptive Prevalence Survey; the nursery dataset has been obtained from the applications of nursery schools in Ljubljana, Slovenia.
 
+\newpage
 ```{r dataset, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 #loaded the ablone dataset from Abalone.txt using read.csv
 ablone<-read.csv("/home/suraj/Desktop/stats_folder/Supervised/Abalone.txt")
-#Transformed sex and rings into factor data
+#Transformed sex and rings into factors
 ablone$sex <- as.factor(ablone$sex)
 ablone$rings <- as.factor(ablone$rings)
 
@@ -69,19 +82,30 @@ car[sapply(car,is.character)]<-lapply(car[sapply(car,is.character)],as.factor)
 contra <- read.csv("/home/suraj/Desktop/stats_folder/Supervised/Contraceptive Method Choice.txt")
 #transformed all character variables into factors
 contra[sapply(contra,is.character)]<-lapply(contra[sapply(contra,is.character)],as.factor)
+#transformed ordinal numeric variables into factors
+contra$w.education <-as.factor(contra$w.education)
+contra$h.education <-as.factor(contra$h.education)
+contra$religion <-as.factor(contra$religion)
+contra$working <-as.factor(contra$working)
+contra$occupation<- as.factor(contra$occupation)
+contra$standard<- as.factor(contra$standard)
+contra$media <-as.factor(contra$media)
+contra$contraceptive<- as.factor(contra$contraceptive)
 #loaded nursery data from Nursery.txt and stored the data in nursery variable
 nursery <- read.csv("/home/suraj/Desktop/stats_folder/Supervised/Nursery.txt")
 #transformed all character variables into factors
 nursery[sapply(nursery,is.character)]<-lapply(nursery[sapply(nursery,is.character)],as.factor)
 ```
 # Description of the Methods{#sec:method}
+The cornerstone of the formal analysis is based upon required statistical classification methods such as multinomial regression, randomForest, and neural networks. Additionally, principal components analysis and variable selection have been used as supplementary to the multinomial process.
+
 ## Multinomial Regression
 Nominal logistic regression models for more than two categories can be used as a classification tool for observation to a class based on the highest predicted probability among groups. The statistical method considers one of the groups as a baseline and fits logistic regression to the ratio of each group member to the baseline. Eventually, the probability of observation falling into each class is evaluated, and a class is assigned based on the highest value. 
 
 ## Variable Selection
 Wrapper methods are the greedy search approach that stepwise removes variables based on an evaluation criterion. A bi-directional elimination method works similar to forwarding selection but does extra backward elimination at each iteration of adding a variable. The process reaches optimal features until no new feature can be added or removed. Due to its greedy nature, different wrapper methods can give different results. Additionally, they are prone to over-fitting and have high computation time. 
 
-## Principle Component Analysis
+## Principal Component Analysis
 PCA is a robust unsupervised machine learning algorithm for feature extraction. The method is useful when a significant correlation is present among continuous covariates. Moreover, it holds no assumption for the distribution of data. PCA considers both covariance and correlation matrix depending upon the evenness of the order of data variance. The algorithm is badly affected by outliers; therefore, it's necessary to remove outliers firstly. Eventually, discretionary components are retained based on the proportion of variance(proportion desired), Cattell's scree plot method, or Kaiser's method. 
 
 ## RandomForest
@@ -89,12 +113,667 @@ RandomForest, likewise bagging, bootstrap samples from the training data with re
 
 ## Neural Network
 The neural network has garnered the attention of the whole world in every sector as more and more data are available for training. The method is very effective in modeling the complex non-linear relationships among data features. The hyperparameter for the hidden layer needs to be carefully adjusted for every dataset to avoid overfitting and to model appropriately.  Feedforward neural networks are most common in applications. It attempts to find a locally optimal solution based on initial reference using gradient descent and backpropagation. 
+\newpage
 
 # Exploratory Analysis{#sec:expo}
+
+## Abalone {#sec:expoabl}
+The dataset contains `r dim(ablone)[1]` observations with no missing values, two categorical variables, sex and rings, and seven numerical variables length, diameter, height, whole weight, sucked weight, viscera weight, and shell weight.The number of rings is the response variable that gives the age in years on the addition of 1.5. The data is in the tidy format as each column corresponds to one feature of abalone, each row corresponds to a different abalone entity, and the characteristics of abalone are the single observational unit. Table \ref{tab:Summariesablf} & \ref{tab:Summariesabln} show the general information of the data set, including data type,number of factors, missing values, mean, quantile, and standard deviation. 
+
+```{r a0, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Summariesabl} Summary statistics of Abalone", fig.pos='H'}
+
+#skim produces the summary, which is pipelined into tibble. 
+skim(ablone) %>%
+as_tibble()  %>%
+  filter(skim_type == "factor") %>%  #filtered categorical  var
+  dplyr::select(skim_variable,n_missing,factor.top_counts,factor.n_unique) %>%  # selected  relevant column 
+ kable(caption = '\\label{tab:Summariesablf} Summary statistics of Abalone: Factors')%>%
+  kable_styling(latex_options="hold_position")
+#produce summary statistics of all variables for the data 
+
+skim(ablone) %>%
+as_tibble()  %>%
+  filter(skim_type == "numeric") %>%  #filtered numerical var
+  dplyr::select(skim_variable,n_missing,numeric.mean,numeric.sd,numeric.p25,numeric.p50	,numeric.p75, numeric.p100) %>%# selected  relevant column 
+ kable(caption = '\\label{tab:Summariesabln} Summary statistics of Abalone: Numerical')%>%
+  kable_styling(latex_options="hold_position")
+#produce summary statistics of all variables for the data
+
+#produce summary statistics of all variables for the data set abalone. 
+```
+
+The response variable rings has `r length(unique(ablone$rings))` groups ranging from 1 to 29 except 28. All sex groups have a fairly similar number of observations, while the ring group 9 has the maximum number of observations as table \ref{tab:Summariesablf} depicts. Moreover, the variances of continuous covariates differ in order notably. A histogram of the response variable can give deep insight into the frequency distribution. Figure \ref{fig:histo1} displays the histogram  and sex-wise distribution of the ring.  
+
+
+```{r a1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:histo1} Distribution of rings", fig.pos = 'H', fig.height=3.5, fig.width=10}
+#. Table the frequency of response variable ring, then plot a histogram
+tab <- table(ablone$rings)
+tab<- as.data.frame(tab)   # converted to dataframe
+colnames(tab) <- c("rings", "number") #assigned columns 
+
+g1<-ggplot(data = tab, mapping = aes(x =rings, y = number),) +
+  geom_col() +   # geom_col draws a histogram
+   labs(x = "Number.of.Rings", y = "Frequency",title = "Frequency distribution of rings")
+#geo_col produces a histogram of the ring var
+
+rings.sex<- table(ablone$rings,ablone$sex)#tabled rings and sex
+rings.sex <- as.data.frame( rings.sex)
+colnames(rings.sex) <- c("rings", "sex", "number")  #assigned columns name
+
+g2<-ggplot(data = rings.sex, mapping = aes(x = rings, y = number, fill = sex)) +
+  geom_col() +              # geom_col draws a histogram
+  facet_wrap(~sex,ncol = 1) + # facet wraps helps to plot different plots of rings for each sex variable
+labs(x = "rings", y = "sex",  title = "Rings distribution sex wise") 
+
+
+grid.arrange(g1,g2,nrow=1) # plot the two gg_plot figures in a single row together
+
+
+```
+From the figure \ref{fig:histo1} histogram, the ring seems to have a right-skewed bell shape curve and a long tail extending in the right direction. The distribution is very sparse, mainly concentrated around 9, and very little data are available for rings below 5 and above 20. The uneven nature may adversely affect the classification accuracy. Additionally, from the figure \ref{fig:histo1} sex-wise distribution, the ring has the same bell shape for all sex groups. The female sex group has slightly more rings than other groups. Before exploring the relationship of rings with continuous covariates, let's check for relation within continuous covariates themselves. A multicollinearity matrix can help better to identify any correlation. 
+
+```{r a2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:multi} Multicollinearity check among continuous covariates", fig.pos = 'H'}
+#the code chunk plots gg_pair for covariance check 
+ablone %>%
+  dplyr::select(-c(sex,rings))%>%  # removed the categorical variables
+  ggpairs()  # ggpairs displays multicollinearity matrix and scatter plot among variables simultaneously.
+
+```
+There exist a very high correlation among continuous covariates, so Principal Component Analysis can effectively reduce the dimension. Besides it, the squeezed scatterplots between length against height and height against whole-weight suggest the presence of two potential outliers. Since outliers can severely distort the performance of the majority of statistical methods, so they should be identified and removed. The figure \ref{fig:outl} demonstrates the change in the scatterplot for length against height as outliers are removed. 
+
+
+
+```{r a3,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:outl} Outliers identification and removal", fig.pos = 'H',fig.width=10, fig.height=3, fig.fullwidth=TRUE}
+#plotting lenght and heigh before removal of outliers
+p<-ablone %>%
+  dplyr::select(-c(sex,rings))%>%
+  ggplot(aes(x = length,y = height)) +
+  geom_point() +
+  labs(x = "length", y = "height",  title = "Squeezed scatterplot with outliers") 
+  
+
+outliers <- which(ablone$height >=0.500 ) # outliers have height above 0.5
+
+ablone.upd<- ablone %>%  # removed the outliers using slice, and stored in ablone.upd
+  slice(-outliers)
+
+g4<-ablone.upd %>%   # plotting lenght vs height after removing outliers
+  dplyr::select(-c(sex,rings))%>%
+  ggplot(aes(x = length,y = height)) +
+  geom_point() +
+  labs(x = "length", y = "height",  title = "Scatterplot without outliers") 
+  
+
+grid.arrange(p,g4,nrow=1)   # presented the two diagrams in a row
+
+```
+Boxplots in figure \ref{fig:box1} of the ring against other continuous covariates are stuffy because of the large number of the response groups in rings. 
+
+```{r a4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:box1} Rings vs continuous covariates: Ablone", fig.pos = 'H',fig.width=10, fig.height=10, fig.fullwidth=FALSE}
+#the code chunk draws boxplots for the distribution of ring vs other continuous covariates of ablone
+p1<-ablone.upd %>%
+  ggplot(aes(x = rings,y = length)) +
+  geom_boxplot() +  #geom_boxplot draws the boxplot
+  labs(x = "rings", y = "length",title="length wise")
+
+p2<-ablone.upd %>%
+  ggplot(aes(x = rings,y = diameter)) +
+  geom_boxplot() +  #geom_boxplot draws the boxplot
+  labs(x = "rings", y = "diameter",title="diameter wise")
+
+p3<-ablone.upd %>%
+  ggplot(aes(x = rings,y = height)) +
+  geom_boxplot() +  #geom_boxplot draws the boxplot
+  labs(x = "rings", y = "height",title="height wise")
+
+p4<-ablone.upd %>%
+  ggplot(aes(x = rings,y = whole.weight)) +
+  geom_boxplot() +
+ labs(x = "rings", y = "whole.weight",title="whole.weight wise ")
+
+p5<-ablone.upd %>%
+  ggplot(aes(x = rings,y = shucked.weight)) +
+  geom_boxplot() +
+ labs(x = "rings", y = "shucked.weight",title="shucked.weight wise ")
+
+p6<-ablone.upd %>%
+  ggplot(aes(x = rings,y = viscera.weight)) +
+  geom_boxplot() +
+ labs(x = "rings", y = "viscera.weight",title="viscera.weight wise ")
+
+p7<-ablone.upd %>%
+  ggplot(aes(x = rings,y = shell.weight)) +
+  geom_boxplot() +
+ labs(x = "rings", y = "shell.weight",title="shell.weight wise ")
+
+
+
+
+grid.arrange(p1,p2,p3,p4,p5,p6,p7,ncol = 2) # 2 plots in each row
+```
+The rings have a very uneven number of observations for every covariate; very few for lower and upper rings groups, many for middle ring groups.  As the number of rings increases, variables such as length, diameter, height, and whole weight increase, whereas shucked weight, viscera weight, and shell weight remain the same approximately. There is evidence of many observations out of the Inter Quartile Range in any of the plots. The abalone dataset is now ready to jump into formal analysis. 
+
+\newpage
+
+## Car Evaluation{#sec:expocar}
+
+The dataset consists of 1728 observations with no missing values and all categorical covariates such as buying, maint, doors, persons, lug_boot, safety. The car attributes cover three main components; luxury, comfort, and safety.  The data is tidy as each column is a unique car feature, each row is an observation of a specific car, and the only observational unit is car characteristics. Table \ref{tab:Summariescar} shows the summary of the data set, including data type, number of factors, and missing values.
+```{r c1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Summariescar} Summary statistics of car", fig.pos='H'}
+#skim produces the summary, which is pipelined into tibble. 
+skim(car) %>%
+as_tibble()  %>%
+  dplyr::select(skim_type,skim_variable,n_missing,factor.top_counts,factor.n_unique) %>%
+ kable(caption = '\\label{tab:Summariescar} Summary statistics of car')%>%
+  kable_styling(latex_options="hold_position")
+#produce summary statistics of all variables for the data set car 
+```
+
+The response variable class has four groups; unacc(unacceptable), acc(fairly acceptable), good(good acceptable), vgood(very good acceptable). The class groups have uneven proportional data distribution as unacc accounts for 1210 observations, whereas vgood has only 65. Other categorical covariates have a fairly uniform group-wise distribution. Figure \ref{fig:histo2}  histogram can give better visualization of the class response variable. 
+
+
+
+```{r c2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:histo2} Distribution of class", fig.pos = 'H', fig.height=4}
+#. Table the frequency of response variable class, then plot a histogram
+tab2 <- table(car$class)
+tab2<- as.data.frame(tab2)
+colnames(tab2) <- c("class", "number")
+
+ggplot(data = tab2, mapping = aes(x =class, y = number)) +
+  geom_col() +   # geom_col draws a histogram
+   labs(x = "Class", y = "Frequency",title = "Frequency distribution of class")
+#geo_col produces a histogram
+
+```
+The proportion of good quality cars are much lower than bad cars. As shown in Table 4, around 70% of total vehicles are unacceptable, while 3.8% are outstanding. 
+```{r c22, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:propcar} Proportion of groups the class", fig.pos = 'H'}
+# creates a proportional table for every groups of car's response variable class
+car %>%
+  tabyl(class) %>%   #table class groups
+  adorn_percentages("col") %>%  #  in percentage terms
+  adorn_pct_formatting() %>%
+  adorn_ns() %>%            #in absolute number terms
+   kable(caption = '\\label{tab:propcar} Propotion of groups in the class')%>%
+  kable_styling(latex_options="hold_position")
+  
+
+```
+
+Now, it's right time to understand the relationship between the class and other categorical covariates. Figure \ref{fig:feature} plots dodged histograms for class vs other variables. 
+
+
+```{r c3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature} Class vs covariates: Car", fig.pos = 'H'}
+#for each covarites, created dodged histogram class wise
+#first variable buying price, created table, and plot
+class.buying<- table(car$class,car$Buying)
+class.buying <- as.data.frame( class.buying)
+colnames(class.buying) <- c("class", "buying", "number")
+
+g1<-ggplot(data = class.buying, mapping = aes(x = buying, y = number, fill = class)) +
+  geom_col(position = "dodge") +  # dodge draws histogram side by side
+  labs(x = "buying", y = "class",
+       title = "buying price wise") 
+
+#second var maint, created table, and plot
+class.maint<- table(car$class,car$maint)
+class.maint <- as.data.frame( class.maint)
+colnames(class.maint) <- c("class", "maint", "number")
+
+g2<-ggplot(data = class.maint, mapping = aes(x = maint, y = number, fill = class)) +
+  geom_col(position = "dodge") + # dodge draws histogram side by side
+  labs(x = "maint", y = "class",
+       title = "maint price wise") 
+
+#third variable doors, created table, and plot
+class.doors<- table(car$class,car$doors)
+class.doors <- as.data.frame( class.doors)
+colnames(class.doors) <- c("class", "doors", "number")
+
+g3<-ggplot(data = class.doors, mapping = aes(x = doors, y = number, fill = class)) +
+  geom_col(position = "dodge") + # dodge draws histogram side by side
+  labs(x = "doors", y = "class",
+       title = "doors number wise") 
+
+
+#fourth variable persons, created table, and plot
+class.persons<- table(car$class,car$persons)
+class.persons <- as.data.frame( class.persons)
+colnames(class.persons) <- c("class", "persons", "number")
+
+g4<-ggplot(data = class.persons, mapping = aes(x = persons, y = number, fill = class)) +
+  geom_col(position = "dodge") + # dodge draws histogram side by side
+  labs(x = "persons", y = "class",
+       title = "persons number wise") 
+
+
+#5th variable  persons, created table, and plot
+class.lug<- table(car$class,car$lug.boot)
+class.lug <- as.data.frame( class.lug)
+colnames(class.lug) <- c("class", "lug", "number")
+
+g5<-ggplot(data = class.lug, mapping = aes(x = lug, y = number, fill = class)) +
+  geom_col(position = "dodge") + # dodge draws histogram side by side
+  labs(x = "lug", y = "class",
+       title = "lug space wise") 
+#6th var safety , created table, and plot
+class.safety<- table(car$class,car$safety)
+class.safety <- as.data.frame( class.safety)
+colnames(class.safety) <- c("class", "safety", "number")
+
+g6<-ggplot(data = class.safety, mapping = aes(x = safety, y = number, fill = class)) +
+  geom_col(position = "dodge") + # dodge draws histogram side by side
+  labs(x = "safety", y = "class",
+       title = "safety wise") 
+
+grid.arrange(g1,g2,g3,g4,g5,g6,nrow=3)   # presented the six diagrams in three row
+
+```
+the above figure \ref{fig:feature} shows that car acceptability decreases with high buying and maintenance prices, whereas increases with safety. Moreover, a lower space for luggage and lesser person accountability increase the car's unacceptability. People tend to reject low safety cars outright.Great cars have medium buying and maintenance costs, have above four doors, accommodate more than two persons, have plenty of luggage space, and have high safety measures. People outright discard low safety and two persons cars.  In all, a customer looks for high safety cars with good comfort available at lower prices. There is no outlier in the case of car data; therefore, it is ready for formal analysis. 
+
+\newpage
+## Contraceptive Method Choice {#sec:expocon}
+
+The dataset consists of `r dim(contra)[1]` observations with no missing values, seven categorical variables, and two continuous variables; Wife's age, Wife's education, Husband's education, Number of children ever born, Wife's religion, Wife's now working, Husband's occupation, Standard of living index, and Media exposure.All women were not pregnant during the time of the survey. The data attributes cover the demographic and socio-economic characteristics of women in Indonessia. The dataset is tidy as each column is a characteristic of women, each row is a unique observation, and the only observational unit is women characteristics. Table \ref{tab:Summariescontraf} & \ref{tab:Summariescontran} show the general information of the data set, including data type, number of factors, and missing values.
+```{r cm1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Summariescontra} Summary statistics of contraceptive method choice", fig.pos='H'}
+#skim produces the summary, which is pipelined into tibble. 
+skim(contra) %>%
+as_tibble()  %>%
+  filter(skim_type == "factor") %>%  #filtered categorical var
+  dplyr::select(skim_variable,n_missing,factor.top_counts,factor.n_unique) %>% # selected relevant columns
+ kable(caption = '\\label{tab:Summariescontraf} Summary statistics of contraceptive method choice:Factors')%>%
+  kable_styling(latex_options="hold_position")
+#produce summary statistics of all variables for the data contraceptive
+
+skim(contra) %>%
+as_tibble()  %>%
+  filter(skim_type == "numeric") %>%  #filtered numerical var
+  dplyr::select(skim_variable,n_missing,numeric.mean,numeric.sd,numeric.p25,numeric.p50	,numeric.p75, numeric.p100) %>%# selected relevant columns
+ kable(caption = '\\label{tab:Summariescontran} Summary statistics of contraceptive method choice: Numerical')%>%
+  kable_styling(latex_options="hold_position")
+#produce summary statistics of all variables for the data contraceptive
+
+```
+Contraceptive is consists of three groups; 1=No-use, 2=Long-term use, 3=Short-term use.  Most of the surveyed women population in Indonesia are educated, non-working, have good living standards, follow Islamism, and stay away from media. The median age is 32, and the median number of children is 3.  Surprisingly, numeric.p100 is 16, whereas numeric.p75 is only 4. That suggests to do some further analysis through boxplots. 
+
+```{r con2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:propcon} Proportion of groups the contraceptive", fig.pos = 'H'}
+# creates a proportional table for every groups of contra's response variable contraceptive
+contra %>%
+  tabyl(contraceptive) %>%   #table class groups
+  adorn_percentages("col") %>%  #  in percentage terms
+  adorn_pct_formatting() %>%
+  adorn_ns() %>%            #in absolute number terms
+   kable(caption = '\\label{tab:propcon} Propotion of groups in the contraceptive')%>%
+  kable_styling(latex_options="hold_position")
+  
+
+
+```
+From the table \ref{tab:propcon}, group 1 has the highest proportion of observations around 43%, while group 2 has the lowest around 22.6%.
+That means majority of wives don't intend to use contraceptives due to adverse health issues or religious belief. Boxplots and histograms can help to deepen the impression further through figures \ref{fig:feature1} & \ref{fig:feature2}. 
+
+
+
+
+```{r cm2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature1} Boxplots of Contraceptive vs Covariates:Numerical", fig.pos = 'H',fig.width=10, fig.height=3, fig.fullwidth=FALSE}
+#the code chunk draws boxplots for age and wife age against contraceptive
+p1<-contra %>%
+  ggplot(aes(x = contraceptive,y = age)) +
+  geom_boxplot() +  #geom_boxplot draws the boxplot
+  labs(x = "contraceptive", y = "wife age",title="contraceptive vs wife age")
+
+p2<-contra %>%
+  ggplot(aes(x = contraceptive,y = children)) +
+  geom_boxplot() +#geom_boxplot draws the boxplot
+  labs(x = "contraceptive", y = "children",title="contraceptive vs number of children")
+grid.arrange(p1,p2,nrow=1)
+```
+From figure \ref{fig:feature1}, wives with short-term contraceptive usage have lower median age, while wives with long-term contraceptive usage have higher median age than any other. Each boxplot in wife age against contraceptive indicates no outliers, has uniform spread and slightly misses symmetry. Whereas, boxplots in children against contraceptives are unsymmetric, indicate the presence of outliers mostly of age above 12, and have unsymmetric spread. Outliers can distort the classification performance severely, so they are  removed. 
+
+```{r cm4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+outliers <- which(contra$children>12) # children above 12 are outliers
+contra<-contra %>%  # removed the outliers using slice
+  slice(-outliers)  # removed the outliers
+```
+
+
+```{r cm3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature2} Plots of Contraceptive vs Covariates:Categorical", fig.pos = 'H',fig.fullwidth=TRUE}
+#the code chunk draws dodged histogram for all categorical covariate against contraceptive
+#first variable wife education created table, and plot
+contra.wife<- table(contra$contraceptive,contra$w.education)
+contra.wife <- as.data.frame( contra.wife)
+colnames(contra.wife) <- c("contra", "w.education", "number")
+
+p3<-ggplot(data = contra.wife, mapping = aes(x = w.education, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "wife education", y = "contraceptive",
+       title = "wife education wise") 
+#second variable husband education created table, and plot
+contra.husband<- table(contra$contraceptive,contra$h.education)
+contra.husband <- as.data.frame( contra.husband)
+colnames(contra.husband) <- c("contra", "h.education", "number")
+
+p4<-ggplot(data = contra.husband, mapping = aes(x = h.education, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "husband education", y = "contraceptive",
+       title = "husband education wise") 
+
+#third variable Wife's religion created table, and plot
+contra.religion<- table(contra$contraceptive,contra$religion)
+contra.religion <- as.data.frame( contra.religion)
+colnames(contra.religion) <- c("contra", "religion", "number")
+p5<-ggplot(data = contra.religion, mapping = aes(x = religion, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "wife religion", y = "contraceptive",
+       title = "wife religion wise") 
+
+#fourth variable Wife's now working created table, and plot
+contra.work<- table(contra$contraceptive,contra$working)
+contra.work <- as.data.frame( contra.work)
+colnames(contra.work) <- c("contra", "work", "number")
+
+p6<-ggplot(data = contra.work, mapping = aes(x = work, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "wife working", y = "contraceptive",
+       title = "wife working wise") 
+
+#fifth variable husband ocupation created table, and plot
+contra.occupation<- table(contra$contraceptive,contra$occupation)
+contra.occupation <- as.data.frame( contra.occupation)
+colnames(contra.occupation) <- c("contra", "occupation", "number")
+
+p7<-ggplot(data = contra.occupation, mapping = aes(x = occupation, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "occupation", y = "contraceptive",
+       title = "husband occupation wise") 
+
+#6th variable Standard-of-living index created table, and plot
+contra.standard<- table(contra$contraceptive,contra$standard)
+contra.standard <- as.data.frame( contra.standard)
+colnames(contra.standard) <- c("contra", "standard", "number")
+
+p8<-ggplot(data = contra.standard, mapping = aes(x = standard, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "standard", y = "contraceptive",
+       title = "living standard wise") 
+#7th variable Media exposure  created table, and plot
+contra.media<- table(contra$contraceptive,contra$media)
+contra.media <- as.data.frame( contra.media)
+colnames(contra.media) <- c("contra", "media", "number")
+
+p9<-ggplot(data = contra.media, mapping = aes(x = media, y = number, fill = contra)) +
+  geom_col(position = "dodge") +
+  labs(x = "media", y = "contraceptive",
+       title = "media exposure wise") 
+
+grid.arrange(p3,p4,p5,p6,p7,p8,p9,ncol = 2) #to display all the diagrams into a grid having 3 rows
+
+```
+Uneducated wives have a higher proportion of no_use, while educated ones have a higher proportion of long_term_use.  Likewise, wives, husbands have the same trend in the education arena. Working and not working wives have a very similar pattern regarding the usage of contraceptives. The majority of Islamic wives are reluctant to use contraceptives. No usage mindset is prevalent in all classes of living standards and media exposures. The contraceptive dataset is now ready for formal analysis. 
+
+\newpage
+## Nursery {#sec:exponur}
+The dataset consists of `r dim(nursery)[1]` observations with no missing values and all categorical covariates; parents, has_nurs, form, children, housing, finance, social, health. The attributes cover concept structure such as parents' employment, family financial structure, family structure, and social health conditions. The data is in a tidy format. Each column is a unique attribute, each row is a unique observation of a nursery application, and the application characteristics are the only observation unit. Table \ref{tab:Summariesnur} shows the general information of the data set, including data type, number of factors, and missing values.
+
+```{r n1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Summariesnur} Summary statistics of Nursery Applications", fig.pos='H'}
+#skim produces the summary, which is pipelined into tibble. 
+skim(nursery) %>%
+as_tibble()  %>%
+  
+  dplyr::select(skim_variable,n_missing,factor.top_counts,factor.n_unique) %>%# selected relevant columns
+ kable(caption = '\\label{tab:Summariesnur} Summary statistics of of Nursery Applications')%>%
+  kable_styling(latex_options="hold_position")
+#produce summary statistics of all variables for the data nursery
+
+
+
+```
+
+The class response variable has four categories; not:not_recomended, priority, special priority, recommended, and very recommended. The group recommended has very few data, so may need further diagnostics. Every other variable has a very even distribution. A proportional table can help to get a clear picture. 
+```{r n3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap = "\\label{fig:propnur}"}
+#the chunk is used to create tables for showing percentage of group data in nursery response variable
+nursery %>%
+  tabyl(class) %>%            # pipelined the data into a tabular form
+  adorn_percentages("col") %>% # to calculate percentage
+  adorn_pct_formatting() %>%
+  adorn_ns() %>%
+   kable(caption = '\\label{tab:propnur} Propotion of groups in the Class')%>%
+  kable_styling(latex_options="hold_position")
+  
+
+```
+The table \ref{tab:propnur}  confirms that there are just two observations for the recommendation group, while other groups have a significant amount of data. The prediction may not go well with minimal data, so these are removed. Only 25.3% of the applications were very recommended, while 33.33% were not recommended. Figures \ref{fig:feature3} & \ref{fig:feature4} display the class distribution and relationship with other covariates. 
+```{r n4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+
+nursery<- subset(nursery, class!="recommend") # removed the group recommended
+
+```
+
+```{r n5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature3} Nursery class histogram", fig.pos = 'H',fig.fullwidth=FALSE,,fig.height=2}
+#the code chunk draw the histogram of the nursery class 
+
+tab2 <- table(nursery$class)   #created a table
+tab2<- as.data.frame(tab2)     # converted into a dataframe
+colnames(tab2) <- c("class", "number") #assigned the column name
+
+ggplot(data = tab2, mapping = aes(x =class, y = number)) +
+  geom_col() #draw the histogram of nursery class variable
+
+```
+
+```{r n6, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature4} Nursery application class vs Covariates", fig.pos = 'H', fig.width=10, fig.height= 12}
+#the code chunk draw different dodged histograms of nursery response var against other covariates.
+
+#first var parents, created table, and plot
+class.parents<- table(nursery$class,nursery$parents)
+class.parents <- as.data.frame( class.parents)
+colnames(class.parents) <- c("class", "parents", "number") 
+
+p1<-ggplot(data = class.parents, mapping = aes(x = parents, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "parents", y = "class",title = "parents wise") 
+
+
+#second var has_nurs, created table, and plot
+class.nurs<- table(nursery$class,nursery$has_nurs)
+class.nurs <- as.data.frame( class.nurs)
+colnames(class.nurs) <- c("class", "has_nurs", "number")
+
+p2<-ggplot(data = class.nurs, mapping = aes(x = has_nurs, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "has_nurs", y = "class",
+       title = "has_nurs wise") 
+
+#third variable form, created table, and plot
+class.form<- table(nursery$class,nursery$form)
+class.form <- as.data.frame( class.form)
+colnames(class.form) <- c("class", "form", "number")
+
+p3<-ggplot(data = class.form, mapping = aes(x = form, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "form", y = "class",
+       title = "form wise") 
+
+#fourth variable children, created table, and plot
+class.children<- table(nursery$class,nursery$children)
+class.children <- as.data.frame( class.children)
+colnames(class.children) <- c("class", "children", "number")
+
+p4<-ggplot(data = class.children, mapping = aes(x = children, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "children", y = "class",
+       title = "class distribution children wise") 
+
+#5th variable  housing, created table, and plot
+class.housing<- table(nursery$class,nursery$housing)
+class.housing <- as.data.frame( class.housing)
+colnames(class.housing) <- c("class", "housing", "number")
+
+p5<-ggplot(data = class.housing, mapping = aes(x = housing, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "housing", y = "class",
+       title = "housing wise") 
+
+
+#6th var finance, created table, and plot
+class.finance<- table(nursery$class,nursery$finance)
+class.finance <- as.data.frame( class.finance)
+colnames(class.finance) <- c("class", "finance", "number")
+
+p6<-ggplot(data = class.finance, mapping = aes(x = finance, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "finance", y = "class",
+       title = "finace wise") 
+
+#7th variable social, created table, and plot
+class.social<- table(nursery$class,nursery$social)
+class.social <- as.data.frame( class.social)
+colnames(class.social) <- c("class", "social", "number")
+
+p7<-ggplot(data = class.social, mapping = aes(x = social, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "social", y = "class",
+       title = "social wise") 
+#8th variable health, created table, and plot
+class.health<- table(nursery$class,nursery$health)
+class.health <- as.data.frame( class.health)
+colnames(class.health) <- c("class", "health", "number")
+
+p8<-ggplot(data = class.health, mapping = aes(x = health, y = number, fill = class)) +
+  geom_col(position = "dodge") +
+  labs(x = "health", y = "class",
+       title = "health wise") 
+
+
+grid.arrange(p1,p2,p3,p4,p5,p6,p7,p8,ncol = 2) # arranged all the plots in a column of 2
+
+```
+The histogram in figure \ref{fig:feature3} shows that few applications were recommended due to the high volume of enrollment.Other groups such as not_recom, priority, and special priority have roughly the same number of observations. Additionally, figure \ref{fig:feature4} depicts that very good recommendation chance increases with usual parents, having a proper nursery at home, complete form of the family, lesser number of children, convenient home,  convenient finance, and high health recommendation. Health has been a major cause of rejection as all applications were rejected with the least health priority. A good social image and convenient housing conditions can also boost the probability of recommendation.  
+\newpage
+
 # Formal Analysis{#sec:formal}
+Formal analysis for each dataset starts with creating standard and consistent performance measure criteria.  Every four datasets are split into multiple training and test pairs. Then, All suitable statistical methods for a dataset are run on each pair. In the end, all training and test errors for each statistical method are averaged to give final classification errors. Eventually, all performances specific to a dataset are compared based on classification error rate. The lesser is classification error, the better is the performance of a method. 
+
+## Abalone 
+Section \ref{sec:expoabl} has discussed the preliminary analysis of the dataset. The formal analysis commences with Principal Component Analysis for dimension reduction of the dataset as whole. The numerical variables have a very high correlation, so dimension reduction can decrease the model complexity while maintaining the performance. Outliers have already been removed. Firstly, we checked for variances of the numerical covariates. 
+```{r fa1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:var} Variance of numerical variables of abalone", fig.pos='H',fig.fullwidth=TRUE}
+#ablone.upd has outlier removed. 
+ablone.upd %>%
+  dplyr::select(-c(sex,rings))%>% # removed factor variables
+  summarise_if(is.numeric,list(v= var),na.rm = T) %>% # used summary to calculate variance
+  kable(caption = '\\label{tab:var} Variance of numerical covariates of abalone')%>%
+  kable_styling(latex_options="hold_position")
+
+```
+
+The highest and lowest value of variance is 0.0098467 for diameter and 0.2401263 for whole_weight. Due to the high difference in the order of variance, a correlation matrix is more suitable for the PCA.
+
+```{r fa2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:pca} PCA Component Output", fig.pos='H'}
+#the code chunk perfroms PCA, then put the summary in the table 
+
+ablone.pca <-ablone.upd %>%
+  dplyr::select(-c(sex,rings))%>%  # removed factor columns
+  princomp(cor=T)  # input is correlation matrix
+# princomp performs eigen value decomposition to create new space of components
+
+#function pca_imp returns a matrix that contains sd, proportional variance, and cumulative variance of the components
+pca_imp <- function(x) {
+  var <- x$sdev^2
+  var <- var/sum(var)     # to evaluate proportional variance for each component
+  rbind(sd = x$sdev, Prop_of_var = var, 
+        Cum_prop = cumsum(var)) # cumsum performs cumulative addition
+}
+
+#print the outcome from PCA
+pca_imp(ablone.pca) %>% 
+  as.data.frame()%>%  # make a table output of the dataframe
+  kable(caption = '\\label{tab:pca} Cumulative proportion of variance')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+As the table \ref{tab:pca} states, the very first component itself captures 92.4% of the total variance. Combined component 1 and component 2 can cover more than 95% of the total variance. Henceforth, PCA has been instrumental in reducing the dimension from seven to two. Now, we split the dataset into three training and test pair subsets in ratios; 50:50, 60:40, and 70:30.  
+
+```{r fa3,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+maxs <- apply(ablone.upd[,2:8], 2, max)  # will be used for scaling during neural network
+mins <- apply(ablone.upd[,2:8], 2, min)  # will be used for scaling during neural network
+
+#dividing the data set into training and testing sub datasets, 
+split <- c(0.5,0.6,0.7)  # split contains the ratio of partition
+n <- dim(ablone.upd)[1]  # n stores the dimension of abalone
+#result.abl is going to store the final averaged result of all the statistical methods
+result.abl<- data.frame(method = c("Simple Multinomial","Reduced Variable Multinomial","PCA Multinomial", "RandomForest","Neural Network"), training.error = c(0),test.error = c(0))
+
+#first pair
+set.seed(1)
+ind <- sample(c(1:n),split[1]*n) # draw random sample of the given size
+ablone.train1 <- ablone.upd[ ind,] 
+ablone.test1 <- ablone.upd[-ind,]
+#second pair
+set.seed(1)
+ind <- sample(c(1:n),split[2]*n) # draw random sample of the given size
+ablone.train2 <- ablone.upd[ ind,] 
+ablone.test2 <- ablone.upd[-ind,]
+#third pair
+set.seed(1)
+ind <- sample(c(1:n),split[3]*n) # draw random sample of the given size
+ablone.train3 <- ablone.upd[ ind,] 
+ablone.test3 <- ablone.upd[-ind,]
+
+```
+Firstly, simple multinomial regression model is fitted on all the training sets, and the classification error rate is evaluated on the corresponding test sets. 
+
+```{r fa4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multiab} Multinomial regression output for different split: Abalone", fig.pos='H',fig.fullwidth=TRUE}
+#this code chunk fit multinomial regression model on each training set, evaluate classification error rate on corresponding test case
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted simple multinomial regression on first train set
+multinom.abl <- multinom( rings ~ .,data = ablone.train1,maxit = 1000,trace = FALSE )
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(ablone.test1$rings)!=as.character(predict(multinom.abl,ablone.test1)))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(ablone.train1$rings)!=as.character(predict(multinom.abl)))
+
+
+# fitted simple multinomial regression on second train set
+multinom.abl2 <- multinom( rings ~ .,data = ablone.train2,maxit = 1000,trace = FALSE )
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(ablone.test2$rings)!=as.character(predict(multinom.abl2,ablone.test2)))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(ablone.train2$rings)!=as.character(predict(multinom.abl2)))
+
+
+# fitted simple multinomial regression on third train set
+multinom.abl3 <- multinom( rings ~ .,data = ablone.train3,maxit = 1000,trace = FALSE )
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(ablone.test3$rings)!=as.character(predict(multinom.abl3,ablone.test3)))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(ablone.train3$rings)!=as.character(predict(multinom.abl3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.abl[1,2:3]<- outcome[4,2:3] #stored the final errors in result
+outcome %>% # print the outcome
+  kable(caption = '\\label{tab:multiab} Multinomial regression output for different split: Abalone')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+\ref{tab:multi} presents the performance of multinomial regression on all the splits. The overall test error is 72.7%, which is pretty bad for classification. However, the test error slightly improves as we have more and more data to train. A confusion matrix can help to understand the class-specific errors.
+
+```{r fa5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Confab} Confusion matrix for multinomial regression: Abalone", fig.pos='H', fig.width=10, fig.height=10,fig.align = "center"}
+
+tab <-  confusion_matrix(targets = as.character(ablone.test2$rings) , predictions  = as.character(predict(multinom.abl2,ablone.test2)))# created the confusion matrix 
+plot_confusion_matrix(tab$`Confusion Matrix`[[1]],add_normalized = FALSE,add_row_percentages = FALSE,place_x_axis_above = FALSE)
+
+```
+
+
+\newpage
 # Conclusion {#sec:con}
 # Future Work{#sec:ext}
+\newpage
 # References {#sec:ref}
+
 
 
 
