@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.11.28)  2 DEC 2021 01:02
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.11.28)  2 DEC 2021 23:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -955,12 +955,48 @@ Overfull \hbox (12.67148pt too wide) in paragraph at lines 535--546
  [][] 
  []
 
-
-LaTeX Warning: Reference `tab:multi' on page 13 undefined on input line 571.
-
 File: classification_files/figure-latex/fa5-1.pdf Graphic file (type pdf)
 <use classification_files/figure-latex/fa5-1.pdf>
-[13] [14] [15] [16] (./classification.aux)
+[13]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[14]
+File: classification_files/figure-latex/fa11-1.pdf Graphic file (type pdf)
+<use classification_files/figure-latex/fa11-1.pdf>
+[15]
+File: classification_files/figure-latex/fc3-1.pdf Graphic file (type pdf)
+<use classification_files/figure-latex/fc3-1.pdf>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[16]
+File: classification_files/figure-latex/fc7-1.pdf Graphic file (type pdf)
+<use classification_files/figure-latex/fc7-1.pdf>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: classification_files/figure-latex/fct3-1.pdf Graphic file (type pdf)
+<use classification_files/figure-latex/fct3-1.pdf>
+[17]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[18]
+File: classification_files/figure-latex/fct7-1.pdf Graphic file (type pdf)
+<use classification_files/figure-latex/fct7-1.pdf>
+File: classification_files/figure-latex/fn3-1.pdf Graphic file (type pdf)
+<use classification_files/figure-latex/fn3-1.pdf>
+[19] [20]
+File: classification_files/figure-latex/fn7-1.pdf Graphic file (type pdf)
+<use classification_files/figure-latex/fn7-1.pdf>
+
+LaTeX Warning: Reference `fig: com3' on page 21 undefined on input line 986.
+
+[21] [22] (./classification.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -968,15 +1004,15 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `classification.out' has not changed.
-(rerunfilecheck)             Checksum: 367743A83C2A46E22C85FE265068445E;2712.
+(rerunfilecheck)             Checksum: F8E2E8C92E6C038FFF39BF4ADDA325EE;3135.
  ) 
 Here is how much of TeX's memory you used:
- 18697 strings out of 478256
- 342115 string characters out of 5855953
- 797336 words of memory out of 5000000
- 38945 multiletter control sequences out of 15000+600000
+ 18812 strings out of 478256
+ 345734 string characters out of 5855953
+ 801651 words of memory out of 5000000
+ 39053 multiletter control sequences out of 15000+600000
  409939 words of font info for 75 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,9n,121p,1035b,350s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 86i,9n,121p,1035b,415s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on classification.pdf (16 pages).
+Output written on classification.pdf (22 pages).

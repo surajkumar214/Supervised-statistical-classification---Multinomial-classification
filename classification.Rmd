@@ -54,13 +54,13 @@ library(cvms)
 \newpage
 # Introduction {#sec:Intro}
 ## Background
-Supervised multinomial classification is an essential aspect of Machine Learning. Sectors such as Business analysts, Data scientists, Financial analysts, and medicine are required to predict the data category based on feature instance vectors. The simple multinomial regression model is the most fundamental statistical method to serve the purpose; however, several advanced classification models such as RandomForest, and Neural Network have evolved over the years, which have brought a revolution in prediction accuracy. RandomForest has a very versatile application based on a decision tree hierarchy. On the other side, Neural network performance has improved over a few decades as more and more data are available for training. Performance comparison is a crucial aspect of choosing the best statistical model for data. Overall classification accuracy and group-specific classification accuracy are the two most prominent used performance measures for supervised multinomial classification. 
+Supervised multinomial classification is an essential aspect of Machine Learning. Sectors such as Business analysts, Data scientists, Financial analysts, and medicine are required to predict the data category based on feature instance vectors. The simple multinomial regression model is the most fundamental statistical method to serve the purpose; however, several advanced classification models such as randomForest, and Neural Network have evolved over the years, which have brought a revolution in prediction accuracy. randomForest has a very versatile application based on a decision tree hierarchy. On the other side, Neural Network performance has improved over a few decades as more and more data are available for training. Performance comparison is a crucial aspect of choosing the best statistical model for data. Overall classification accuracy and group-specific classification accuracy are the two most prominent used performance measures for supervised multinomial classification. 
 
 ## Aim of Analysis
 The research project aims to evaluate the best multinomial classification models based on some performance measure criteria. Specifically, the main objectives are to design a study to access performance in classification, measure the performance of a simple multinomial regression model, and compare the performance to that of other statistical methods. 
 
 ## Workflow 
-The study goes through exploratory and formal data analysis of 4 datasets; Abalone, Car evaluation, Nursery school application, and Contraceptive method choice. All of the datasets have multi-class categorical output and a set of covariates.  This report focuses on box plots, summaries, scatterplots, histograms, bar plots, and proportional tables to develop initial impressions about the data in section \ref{sec:expo}. While the study deepens on designing a performance measure, fitting multinomial regression, Random forest, and Neural network to each dataset, and comparing the outcomes in section \ref{sec:formal}. \ref{sec:method}nd section explains the background and motivation for the methods. Eventually, \ref{sec:con}th section concludes the remark extracted from the overall analysis, and \ref{sec:ext}th section discusses the possible future extension in the work. 
+The study goes through exploratory and formal data analysis of 4 datasets; Abalone, Car evaluation, Nursery school application, and Contraceptive method choice. All of the datasets have multi-class categorical output and a set of covariates.  This report focuses on box plots, summaries, scatterplots, barplots, bar plots, and proportional tables to develop initial impressions about the data in section \ref{sec:expo}. While the study deepens on designing a performance measure, fitting multinomial regression, Random forest, and Neural Network to each dataset, and comparing the outcomes in section \ref{sec:formal}. \ref{sec:method}nd section explains the background and motivation for the methods. Eventually, \ref{sec:con}th section concludes the remark extracted from the overall analysis, and \ref{sec:ext}th section discusses the possible future extension in the work. 
 
 ## Data Descriptions
 The aim of the analysis is specific for each dataset; predicting the age of abalone from physical
@@ -97,7 +97,7 @@ nursery <- read.csv("/home/suraj/Desktop/stats_folder/Supervised/Nursery.txt")
 nursery[sapply(nursery,is.character)]<-lapply(nursery[sapply(nursery,is.character)],as.factor)
 ```
 # Description of the Methods{#sec:method}
-The cornerstone of the formal analysis is based upon required statistical classification methods such as multinomial regression, randomForest, and neural networks. Additionally, principal components analysis and variable selection have been used as supplementary to the multinomial process.
+The cornerstone of the formal analysis is based upon required statistical classification methods such as multinomial regression, randomForest, and Neural Networks. Additionally, principal components analysis and variable selection have been used as supplementary to the multinomial process.
 
 ## Multinomial Regression
 Nominal logistic regression models for more than two categories can be used as a classification tool for observation to a class based on the highest predicted probability among groups. The statistical method considers one of the groups as a baseline and fits logistic regression to the ratio of each group member to the baseline. Eventually, the probability of observation falling into each class is evaluated, and a class is assigned based on the highest value. 
@@ -109,10 +109,10 @@ Wrapper methods are the greedy search approach that stepwise removes variables b
 PCA is a robust unsupervised machine learning algorithm for feature extraction. The method is useful when a significant correlation is present among continuous covariates. Moreover, it holds no assumption for the distribution of data. PCA considers both covariance and correlation matrix depending upon the evenness of the order of data variance. The algorithm is badly affected by outliers; therefore, it's necessary to remove outliers firstly. Eventually, discretionary components are retained based on the proportion of variance(proportion desired), Cattell's scree plot method, or Kaiser's method. 
 
 ## RandomForest
-RandomForest, likewise bagging, bootstrap samples from the training data with replacement and average across all out-of-bag errors to give overall miss-classification error rate. Additionally, the former method attempts to decorrelate decision trees by randomly selecting a subset of features, which helps reduce the variance. RandomForest beautifully handles missing data, mixed datasets, and multicollinearity. 
+RandomForest, likewise bagging, bootstrap samples from the training data with replacement and average across all out-of-bag errors to give overall miss-classification error rate. Additionally, the former method attempts to decorrelate decision trees by randomly selecting a subset of features, which helps reduce the variance. randomForest beautifully handles missing data, mixed datasets, and multicollinearity. 
 
 ## Neural Network
-The neural network has garnered the attention of the whole world in every sector as more and more data are available for training. The method is very effective in modeling the complex non-linear relationships among data features. The hyperparameter for the hidden layer needs to be carefully adjusted for every dataset to avoid overfitting and to model appropriately.  Feedforward neural networks are most common in applications. It attempts to find a locally optimal solution based on initial reference using gradient descent and backpropagation. 
+The Neural Network has garnered the attention of the whole world in every sector as more and more data are available for training. The method is very effective in modeling the complex non-linear relationships among data features. The hyperparameter for the hidden layer needs to be carefully adjusted for every dataset to avoid overfitting and to model appropriately.  Feedforward Neural Networks are most common in applications. It attempts to find a locally optimal solution based on initial reference using gradient descent and backpropagation. 
 \newpage
 
 # Exploratory Analysis{#sec:expo}
@@ -142,26 +142,26 @@ as_tibble()  %>%
 #produce summary statistics of all variables for the data set abalone. 
 ```
 
-The response variable rings has `r length(unique(ablone$rings))` groups ranging from 1 to 29 except 28. All sex groups have a fairly similar number of observations, while the ring group 9 has the maximum number of observations as table \ref{tab:Summariesablf} depicts. Moreover, the variances of continuous covariates differ in order notably. A histogram of the response variable can give deep insight into the frequency distribution. Figure \ref{fig:histo1} displays the histogram  and sex-wise distribution of the ring.  
+The response variable rings has `r length(unique(ablone$rings))` groups ranging from 1 to 29 except 28. All sex groups have a fairly similar number of observations, while the ring group 9 has the maximum number of observations as table \ref{tab:Summariesablf} depicts. Moreover, the variances of continuous covariates differ in order notably. A barplot of the response variable can give deep insight into the frequency distribution. Figure \ref{fig:histo1} displays the barplot  and sex-wise distribution of the ring.  
 
 
 ```{r a1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:histo1} Distribution of rings", fig.pos = 'H', fig.height=3.5, fig.width=10}
-#. Table the frequency of response variable ring, then plot a histogram
+#. Table the frequency of response variable ring, then plot a barplot
 tab <- table(ablone$rings)
 tab<- as.data.frame(tab)   # converted to dataframe
 colnames(tab) <- c("rings", "number") #assigned columns 
 
 g1<-ggplot(data = tab, mapping = aes(x =rings, y = number),) +
-  geom_col() +   # geom_col draws a histogram
+  geom_col() +   # geom_col draws a barplot
    labs(x = "Number.of.Rings", y = "Frequency",title = "Frequency distribution of rings")
-#geo_col produces a histogram of the ring var
+#geo_col produces a barplot of the ring var
 
 rings.sex<- table(ablone$rings,ablone$sex)#tabled rings and sex
 rings.sex <- as.data.frame( rings.sex)
 colnames(rings.sex) <- c("rings", "sex", "number")  #assigned columns name
 
 g2<-ggplot(data = rings.sex, mapping = aes(x = rings, y = number, fill = sex)) +
-  geom_col() +              # geom_col draws a histogram
+  geom_col() +              # geom_col draws a barplot
   facet_wrap(~sex,ncol = 1) + # facet wraps helps to plot different plots of rings for each sex variable
 labs(x = "rings", y = "sex",  title = "Rings distribution sex wise") 
 
@@ -170,7 +170,7 @@ grid.arrange(g1,g2,nrow=1) # plot the two gg_plot figures in a single row togeth
 
 
 ```
-From the figure \ref{fig:histo1} histogram, the ring seems to have a right-skewed bell shape curve and a long tail extending in the right direction. The distribution is very sparse, mainly concentrated around 9, and very little data are available for rings below 5 and above 20. The uneven nature may adversely affect the classification accuracy. Additionally, from the figure \ref{fig:histo1} sex-wise distribution, the ring has the same bell shape for all sex groups. The female sex group has slightly more rings than other groups. Before exploring the relationship of rings with continuous covariates, let's check for relation within continuous covariates themselves. A multicollinearity matrix can help better to identify any correlation. 
+From the figure \ref{fig:histo1} barplot, the ring seems to have a right-skewed bell shape curve and a long tail extending in the right direction. The distribution is very sparse, mainly concentrated around 9, and very little data are available for rings below 5 and above 20. The uneven nature may adversely affect the classification accuracy. Additionally, from the figure \ref{fig:histo1} sex-wise distribution, the ring has the same bell shape for all sex groups. The female sex group has slightly more rings than other groups. Before exploring the relationship of rings with continuous covariates, let's check for relation within continuous covariates themselves. A multicollinearity matrix can help better to identify any correlation. 
 
 ```{r a2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:multi} Multicollinearity check among continuous covariates", fig.pos = 'H'}
 #the code chunk plots gg_pair for covariance check 
@@ -268,20 +268,20 @@ as_tibble()  %>%
 #produce summary statistics of all variables for the data set car 
 ```
 
-The response variable class has four groups; unacc(unacceptable), acc(fairly acceptable), good(good acceptable), vgood(very good acceptable). The class groups have uneven proportional data distribution as unacc accounts for 1210 observations, whereas vgood has only 65. Other categorical covariates have a fairly uniform group-wise distribution. Figure \ref{fig:histo2}  histogram can give better visualization of the class response variable. 
+The response variable class has four groups; unacc(unacceptable), acc(fairly acceptable), good(good acceptable), vgood(very good acceptable). The class groups have uneven proportional data distribution as unacc accounts for 1210 observations, whereas vgood has only 65. Other categorical covariates have a fairly uniform group-wise distribution. Figure \ref{fig:histo2}  barplot can give better visualization of the class response variable. 
 
 
 
 ```{r c2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:histo2} Distribution of class", fig.pos = 'H', fig.height=4}
-#. Table the frequency of response variable class, then plot a histogram
+#. Table the frequency of response variable class, then plot a barplot
 tab2 <- table(car$class)
 tab2<- as.data.frame(tab2)
 colnames(tab2) <- c("class", "number")
 
 ggplot(data = tab2, mapping = aes(x =class, y = number)) +
-  geom_col() +   # geom_col draws a histogram
+  geom_col() +   # geom_col draws a barplot
    labs(x = "Class", y = "Frequency",title = "Frequency distribution of class")
-#geo_col produces a histogram
+#geo_col produces a barplot
 
 ```
 The proportion of good quality cars are much lower than bad cars. As shown in Table 4, around 70% of total vehicles are unacceptable, while 3.8% are outstanding. 
@@ -298,18 +298,18 @@ car %>%
 
 ```
 
-Now, it's right time to understand the relationship between the class and other categorical covariates. Figure \ref{fig:feature} plots dodged histograms for class vs other variables. 
+Now, it's right time to understand the relationship between the class and other categorical covariates. Figure \ref{fig:feature} plots dodged barplots for class vs other variables. 
 
 
 ```{r c3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature} Class vs covariates: Car", fig.pos = 'H'}
-#for each covarites, created dodged histogram class wise
+#for each covarites, created dodged barplot class wise
 #first variable buying price, created table, and plot
 class.buying<- table(car$class,car$Buying)
 class.buying <- as.data.frame( class.buying)
 colnames(class.buying) <- c("class", "buying", "number")
 
 g1<-ggplot(data = class.buying, mapping = aes(x = buying, y = number, fill = class)) +
-  geom_col(position = "dodge") +  # dodge draws histogram side by side
+  geom_col(position = "dodge") +  # dodge draws a barplot side by side
   labs(x = "buying", y = "class",
        title = "buying price wise") 
 
@@ -319,7 +319,7 @@ class.maint <- as.data.frame( class.maint)
 colnames(class.maint) <- c("class", "maint", "number")
 
 g2<-ggplot(data = class.maint, mapping = aes(x = maint, y = number, fill = class)) +
-  geom_col(position = "dodge") + # dodge draws histogram side by side
+  geom_col(position = "dodge") + # dodge draws a barplot side by side
   labs(x = "maint", y = "class",
        title = "maint price wise") 
 
@@ -329,7 +329,7 @@ class.doors <- as.data.frame( class.doors)
 colnames(class.doors) <- c("class", "doors", "number")
 
 g3<-ggplot(data = class.doors, mapping = aes(x = doors, y = number, fill = class)) +
-  geom_col(position = "dodge") + # dodge draws histogram side by side
+  geom_col(position = "dodge") + # dodge draws a barplot side by side
   labs(x = "doors", y = "class",
        title = "doors number wise") 
 
@@ -340,7 +340,7 @@ class.persons <- as.data.frame( class.persons)
 colnames(class.persons) <- c("class", "persons", "number")
 
 g4<-ggplot(data = class.persons, mapping = aes(x = persons, y = number, fill = class)) +
-  geom_col(position = "dodge") + # dodge draws histogram side by side
+  geom_col(position = "dodge") + # dodge draws a barplot side by side
   labs(x = "persons", y = "class",
        title = "persons number wise") 
 
@@ -351,7 +351,7 @@ class.lug <- as.data.frame( class.lug)
 colnames(class.lug) <- c("class", "lug", "number")
 
 g5<-ggplot(data = class.lug, mapping = aes(x = lug, y = number, fill = class)) +
-  geom_col(position = "dodge") + # dodge draws histogram side by side
+  geom_col(position = "dodge") + # dodge draws a barplot side by side
   labs(x = "lug", y = "class",
        title = "lug space wise") 
 #6th var safety , created table, and plot
@@ -360,7 +360,7 @@ class.safety <- as.data.frame( class.safety)
 colnames(class.safety) <- c("class", "safety", "number")
 
 g6<-ggplot(data = class.safety, mapping = aes(x = safety, y = number, fill = class)) +
-  geom_col(position = "dodge") + # dodge draws histogram side by side
+  geom_col(position = "dodge") + # dodge draws a barplot side by side
   labs(x = "safety", y = "class",
        title = "safety wise") 
 
@@ -408,7 +408,7 @@ contra %>%
 
 ```
 From the table \ref{tab:propcon}, group 1 has the highest proportion of observations around 43%, while group 2 has the lowest around 22.6%.
-That means majority of wives don't intend to use contraceptives due to adverse health issues or religious belief. Boxplots and histograms can help to deepen the impression further through figures \ref{fig:feature1} & \ref{fig:feature2}. 
+That means majority of wives don't intend to use contraceptives due to adverse health issues or religious belief. Boxplots and barplots can help to deepen the impression further through figures \ref{fig:feature1} & \ref{fig:feature2}. 
 
 
 
@@ -436,7 +436,7 @@ contra<-contra %>%  # removed the outliers using slice
 
 
 ```{r cm3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature2} Plots of Contraceptive vs Covariates:Categorical", fig.pos = 'H',fig.fullwidth=TRUE}
-#the code chunk draws dodged histogram for all categorical covariate against contraceptive
+#the code chunk draws dodged barplot for all categorical covariate against contraceptive
 #first variable wife education created table, and plot
 contra.wife<- table(contra$contraceptive,contra$w.education)
 contra.wife <- as.data.frame( contra.wife)
@@ -547,20 +547,20 @@ nursery<- subset(nursery, class!="recommend") # removed the group recommended
 
 ```
 
-```{r n5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature3} Nursery class histogram", fig.pos = 'H',fig.fullwidth=FALSE,,fig.height=2}
-#the code chunk draw the histogram of the nursery class 
+```{r n5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature3} Nursery class barplot", fig.pos = 'H',fig.fullwidth=FALSE,,fig.height=2}
+#the code chunk draw the barplot of the nursery class 
 
 tab2 <- table(nursery$class)   #created a table
 tab2<- as.data.frame(tab2)     # converted into a dataframe
 colnames(tab2) <- c("class", "number") #assigned the column name
 
 ggplot(data = tab2, mapping = aes(x =class, y = number)) +
-  geom_col() #draw the histogram of nursery class variable
+  geom_col() #draw the barplot of nursery class variable
 
 ```
 
 ```{r n6, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.align = "center",fig.cap = "\\label{fig:feature4} Nursery application class vs Covariates", fig.pos = 'H', fig.width=10, fig.height= 12}
-#the code chunk draw different dodged histograms of nursery response var against other covariates.
+#the code chunk draw different dodged barplots of nursery response var against other covariates.
 
 #first var parents, created table, and plot
 class.parents<- table(nursery$class,nursery$parents)
@@ -646,14 +646,14 @@ p8<-ggplot(data = class.health, mapping = aes(x = health, y = number, fill = cla
 grid.arrange(p1,p2,p3,p4,p5,p6,p7,p8,ncol = 2) # arranged all the plots in a column of 2
 
 ```
-The histogram in figure \ref{fig:feature3} shows that few applications were recommended due to the high volume of enrollment.Other groups such as not_recom, priority, and special priority have roughly the same number of observations. Additionally, figure \ref{fig:feature4} depicts that very good recommendation chance increases with usual parents, having a proper nursery at home, complete form of the family, lesser number of children, convenient home,  convenient finance, and high health recommendation. Health has been a major cause of rejection as all applications were rejected with the least health priority. A good social image and convenient housing conditions can also boost the probability of recommendation.  
+The barplot in figure \ref{fig:feature3} shows that few applications were recommended due to the high volume of enrollment.Other groups such as not_recom, priority, and special priority have roughly the same number of observations. Additionally, figure \ref{fig:feature4} depicts that very good recommendation chance increases with usual parents, having a proper nursery at home, complete form of the family, lesser number of children, convenient home,  convenient finance, and high health recommendation. Health has been a major cause of rejection as all applications were rejected with the least health priority. A good social image and convenient housing conditions can also boost the probability of recommendation.  
 \newpage
 
 # Formal Analysis{#sec:formal}
-Formal analysis for each dataset starts with creating standard and consistent performance measure criteria.  Every four datasets are split into multiple training and test pairs. Then, All suitable statistical methods for a dataset are run on each pair. In the end, all training and test errors for each statistical method are averaged to give final classification errors. Eventually, all performances specific to a dataset are compared based on classification error rate. The lesser is classification error, the better is the performance of a method. 
+Formal analysis for each dataset starts with creating standard and consistent performance measure criteria.  Every four datasets are split into multiple training and test pairs. Then, All suitable statistical methods for a dataset are run on each pair. In the end, all training and test errors for each statistical method are averaged to give final classification errors. Eventually, all performances specific to a dataset are compared based on classification error rate. The lesser is classification error, the better is the performance of a method. Furthermore, each continuous covariate is scaled before feeding to Neural Network. In order to choose the best hyperparameter for each dataset, the training set is run on exhaustive set of hyperparamters from 1 to 5,5,5; the model having least classification error is choosen for further comparison with other statistical methods. 
 
 ## Abalone 
-Section \ref{sec:expoabl} has discussed the preliminary analysis of the dataset. The formal analysis commences with Principal Component Analysis for dimension reduction of the dataset as whole. The numerical variables have a very high correlation, so dimension reduction can decrease the model complexity while maintaining the performance. Outliers have already been removed. Firstly, we checked for variances of the numerical covariates. 
+Section \ref{sec:expoabl} has discussed the preliminary analysis of the dataset. The formal analysis commences with Principal Component Analysis for dimension reduction of the dataset as whole. The numerical variables have a very high correlation, so PCA can decrease the model complexity while maintaining the performance. Outliers have already been removed. Firstly, we checked for variances of the numerical covariates. 
 ```{r fa1, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:var} Variance of numerical variables of abalone", fig.pos='H',fig.fullwidth=TRUE}
 #ablone.upd has outlier removed. 
 ablone.upd %>%
@@ -690,17 +690,17 @@ pca_imp(ablone.pca) %>%
 
 
 ```
-As the table \ref{tab:pca} states, the very first component itself captures 92.4% of the total variance. Combined component 1 and component 2 can cover more than 95% of the total variance. Henceforth, PCA has been instrumental in reducing the dimension from seven to two. Now, we split the dataset into three training and test pair subsets in ratios; 50:50, 60:40, and 70:30.  
+As the table \ref{tab:pca} states, the very first component itself captures 92.4% of the total variance. Combined component 1 and component 2 can cover more than 95% of the total variance. Henceforth, PCA has been successful in reducing the dimension from seven to two. Dataset is split into three training and test pair subsets in ratios; 50:50, 60:40, and 70:30.  
 
 ```{r fa3,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
-maxs <- apply(ablone.upd[,2:8], 2, max)  # will be used for scaling during neural network
-mins <- apply(ablone.upd[,2:8], 2, min)  # will be used for scaling during neural network
+maxsab <- apply(ablone.upd[,2:8], 2, max)  # will be used for scaling during Neural Network
+minsab <- apply(ablone.upd[,2:8], 2, min)  # will be used for scaling during Neural Network
 
 #dividing the data set into training and testing sub datasets, 
 split <- c(0.5,0.6,0.7)  # split contains the ratio of partition
 n <- dim(ablone.upd)[1]  # n stores the dimension of abalone
 #result.abl is going to store the final averaged result of all the statistical methods
-result.abl<- data.frame(method = c("Simple Multinomial","Reduced Variable Multinomial","PCA Multinomial", "RandomForest","Neural Network"), training.error = c(0),test.error = c(0))
+result.abl<- data.frame(method = c("Simple Multinomial","Reduced Variable Multinomial","PCA Multinomial", "randomForest","Neural Network"), training.error = c(0),test.error = c(0))
 
 #first pair
 set.seed(1)
@@ -721,7 +721,7 @@ ablone.test3 <- ablone.upd[-ind,]
 ```
 Firstly, simple multinomial regression model is fitted on all the training sets, and the classification error rate is evaluated on the corresponding test sets. 
 
-```{r fa4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multiab} Multinomial regression output for different split: Abalone", fig.pos='H',fig.fullwidth=TRUE}
+```{r fa4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multiab} Multinomial regression output for different splits: Abalone", fig.pos='H'}
 #this code chunk fit multinomial regression model on each training set, evaluate classification error rate on corresponding test case
 outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
 
@@ -751,27 +751,1088 @@ outcome[3,"training.error"]<-mean(as.character(ablone.train3$rings)!=as.characte
 
 #average all the training and test errors
 outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
-result.abl[1,2:3]<- outcome[4,2:3] #stored the final errors in result
-outcome %>% # print the outcome
-  kable(caption = '\\label{tab:multiab} Multinomial regression output for different split: Abalone')%>%
+result.abl[1,2:3]<- outcome[4,2:3] #stored the final errors in result.abl for final comparison
+
+outcome %>% # print the outcome in tables
+  kable(caption = '\\label{tab:multiab} Multinomial regression output for different splits: Abalone')%>%
   kable_styling(latex_options="hold_position")
 
 
 ```
-\ref{tab:multi} presents the performance of multinomial regression on all the splits. The overall test error is 72.7%, which is pretty bad for classification. However, the test error slightly improves as we have more and more data to train. A confusion matrix can help to understand the class-specific errors.
+Table \ref{tab:multiab} presents the classification performance of multinomial regression on all the splits. The overall test error is `r round(outcome[4,"test.error"]*100,4)`%, which is worst. However, the test error slightly improves with training set having more data. A confusion matrix can help to understand the class-specific errors.
 
 ```{r fa5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Confab} Confusion matrix for multinomial regression: Abalone", fig.pos='H', fig.width=10, fig.height=10,fig.align = "center"}
-
+#the code chunk plots the confusion matrix using confusion_matrix function from csmv library
 tab <-  confusion_matrix(targets = as.character(ablone.test2$rings) , predictions  = as.character(predict(multinom.abl2,ablone.test2)))# created the confusion matrix 
+#plot_confusin_matrix draws the colored plot. 
 plot_confusion_matrix(tab$`Confusion Matrix`[[1]],add_normalized = FALSE,add_row_percentages = FALSE,place_x_axis_above = FALSE)
+
+```
+The confusion matrix in figure \ref{fig:Confab} clearly states that the prediction has missed the target very closely. The diagonal pattern in the density of blue color confirms the previous statement. Now we proceed with variable selection on all the three last multinomial models. 
+
+```{r fa6, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:vrab} Variable Reduction output for different splits: Abalone", fig.pos='H'}
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted simple bi-directional elimination  on the first train set
+set.seed(81)
+multinom.abl <- stepAIC(multinom.abl, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(ablone.test1$rings)!=as.character(predict(multinom.abl,ablone.test1)))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(ablone.train1$rings)!=as.character(predict(multinom.abl)))
+
+
+# fitted simple bi-directional elimination on the second train set
+set.seed(81)
+multinom.abl2 <- stepAIC(multinom.abl2, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(ablone.test2$rings)!=as.character(predict(multinom.abl2,ablone.test2)))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(ablone.train2$rings)!=as.character(predict(multinom.abl2)))
+
+
+# fitted simple bi-directional elimination on the third train set
+set.seed(81)
+multinom.abl3 <- stepAIC(multinom.abl3, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(ablone.test3$rings)!=as.character(predict(multinom.abl3,ablone.test3)))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(ablone.train3$rings)!=as.character(predict(multinom.abl3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+# also stored the results in result.ab
+result.abl[2,2:3]<- outcome[4,2:3] #stored the final errors in result
+
+outcome %>%  # print the outcome in form of a table
+  kable(caption = '\\label{tab:vrab} Variable reduction output for different splits: Abalone')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+The bi-direction wrapper method leads to variable reduction to `r multinom.abl$n[1]-1`, `r multinom.abl2$n[1]-1`,`r multinom.abl3$n[1]-1` for the corresponding multinomial models first, second, and third, each having 9 input variables. Comparing table \ref{tab:vrab} with the table \ref{tab:multiab}, a marginal improvement in the overall test error rate can be noticed. The advantage is of having lesser complexity of the reduced model for the same output. 
+
+```{r fa7,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+result.abl[3,2:3]<- c(0.7332582,0.7489567) #stored the final errors in result
+
+```
+
+```{r fa8, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:rfab} Random Forest output for different splits: Ablone", fig.pos='H'}
+#the code chunk applies randomForest on each training set. 
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted randomForest on first train set
+ablone.train1 <- droplevels(ablone.train1) #required to drop levels before applying randomForest
+
+
+multinom.abl<-randomForest(rings~., data = ablone.train1, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(ablone.test1$rings)!=as.character(predict(multinom.abl,ablone.test1)))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(ablone.train1$rings)!=as.character(predict(multinom.abl)))
+
+
+# fitted randomForest on second train set
+ablone.train2 <- droplevels(ablone.train2)
+
+multinom.abl2<-randomForest(rings~., data = ablone.train2, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(ablone.test2$rings)!=as.character(predict(multinom.abl2,ablone.test2)))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(ablone.train2$rings)!=as.character(predict(multinom.abl2)))
+
+
+# fitted randomForest on third train set
+ablone.train3 <- droplevels(ablone.train3)
+multinom.abl3<-randomForest(rings~., data = ablone.train3, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(ablone.test3$rings)!=as.character(predict(multinom.abl3,ablone.test3)))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(ablone.train3$rings)!=as.character(predict(multinom.abl3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.abl[4,2:3]<- outcome[4,2:3] #stored the final errors in result
+
+outcome %>%
+  kable(caption = '\\label{tab:rfab} randomForest output for different splits: Ablone')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+RamdomForest has even worst performance than the simple multinomial as the overall training and test errors have jumped up by 2-3% in table \ref{tab:rfab}. Now we go for the Neural Network. The numerical data is scaled beforehand. 
+
+```{r fa9, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+#scaled the numerical variable by subtracting the min value and divided by max-min 
+ablone.train1[,2:8]<-scale(ablone.train1[,2:8], center = minsab, scale = maxsab - minsab)
+ablone.test1[,2:8]<-scale(ablone.test1[,2:8], center = minsab, scale = maxsab - minsab)
+
+ablone.train2[,2:8]<-scale(ablone.train2[,2:8], center = minsab, scale = maxsab - minsab)
+ablone.test2[,2:8]<-scale(ablone.test2[,2:8], center = minsab, scale = maxsab - minsab)
+
+
+
+
+```
+
+```{r fa10, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:NNab} Neural Network output for different splits :Ablone", fig.pos='H'}
+#the code chunk prepares input data for neural network, apply neural network, and stores all the result. 
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+#Neural Network for split 1
+#created trainData suitable for neuralnet using class indicator function available in nnet
+trainData <- cbind(class.ind(ablone.train1$sex),ablone.train1[, 2:8], class.ind(ablone.train1$rings))
+
+#created testData suitable for neuralnet using class indicator function available in nnet
+testData <- cbind(class.ind(ablone.test1$sex),ablone.test1[, 2:8], class.ind(ablone.test1$rings))
+set.seed(80)
+#fitted a neural network 
+nn_ablone <- neuralnet(  `5`+ `6` + `7` + `8` + `9` + `10` + `11` + `12` + `13` + `14` + `15` + `16` + `17` + `18` + `19` + `20`   ~ F + I + M + length + diameter + height + whole.weight + shucked.weight + viscera.weight + shell.weight,data=trainData,hidden = c(3) ,linear.output=FALSE,err.fct='ce')
+
+#compare the performance on test and training set
+original_values <- max.col(trainData[,c(15:30)])  #target value
+predictions <- max.col(nn_ablone$net.result[[1]])  # prediction
+outcome[1,"training.error"]<-mean(original_values!=predictions) #comparision
+
+#same steps as above
+compute_test <- neuralnet::compute(nn_ablone,testData[, 1:10])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(15:30)])
+outcome[1,"test.error"]<-mean(original_values!=predictions_test)
+
+
+#Neural Network for split 2
+# every step is likewise step 1
+trainData <- cbind(class.ind(ablone.train2$sex),ablone.train2[, 2:8], class.ind(ablone.train2$rings))
+
+
+testData <- cbind(class.ind(ablone.test2$sex),ablone.test2[, 2:8], class.ind(ablone.test2$rings))
+set.seed(80)
+
+nn_ablone <- neuralnet(  `5`+ `6` + `7` + `8` + `9` + `10` + `11` + `12` + `13` + `14` + `15` + `16` + `17` + `18` + `19` + `20`   ~ F + I + M + length + diameter + height + whole.weight + shucked.weight + viscera.weight + shell.weight,data=trainData,hidden = c(3) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(15:30)])
+predictions <- max.col(nn_ablone$net.result[[1]])
+outcome[2,"training.error"]<-mean(original_values!=predictions)
+
+compute_test <- neuralnet::compute(nn_ablone,testData[, 1:10])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(15:30)])
+outcome[2,"test.error"]<-mean(original_values!=predictions_test)
+
+outcome[3,"training.error"]<-NA # not able to calculate weight on 70:40 split training set
+
+outcome[3,"test.error"]<-NA  # not able to calculate weight on 70:40 split training set
+
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:2,-1],2,mean)
+result.abl[5,2:3]<- outcome[4,2:3] #stored the final errors in result
+#print the outcome
+outcome %>%
+  kable(caption = '\\label{tab:NNab} Neural Network output for different splits: Ablone')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+
+The Neural Network having hyperparameter 3  fails to calculate weight for 70:30 split; henceforth, the overall error is calculated with the rest two splits. In terms of performance, the method is not giving any improved results. The overall training error shifts up to `r round(outcome[4,"training.error"],4)` because of sparse and inadequate data for good training. 
+
+```{r fa11, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:com} Comparision of performances :Ablone", fig.pos='H',fig.width=10, fig.height= 4,fig.fullwidth=TRUE}
+#the code chunk draws bar plots for training and test classificaton errors for all statistical methods
+
+  g1<-ggplot(data =result.abl, mapping = aes(x = method, y = training.error, )) +
+  geom_col(fill="red") +  # draws a barplot
+    labs(x = "Method", y = "Training error",title = "Training error comparison")+
+   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+#geo_col produces bar plot
+  
+  g2<-ggplot(data =result.abl, mapping = aes(x = method, y = test.error, )) +
+  geom_col(fill="green") +  # draws a barplot
+  labs(x = "Method", y = "Test error",title = "Test error comparison")+
+     theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+  grid.arrange(g1,g2,nrow = 1)
+
+```
+
+The overall classification error rates are pretty high for all the statistical methods for the Abalone dataset as shown in figure \ref{fig:com}. The reasons could be attributed to very sparse data distribution and inadequate observations. Moreover, observations outside of IQR ranges of height and whole_weight covariates could have distorted the performance.  Random forest and PCA have performed more poorly than simple multinomial. However, variable selection helped to reduce the number of inputs keeping the classification performance close to the multinomial regression.  
+
+## Car Evaluation 
+From exploratory analysis about car evaluation dataset in section \ref{sec:expocar}, we are ready to apply simple multinomial regression, variable reduction by a wrapper method, randomForest, and Neural Network. Likewise abalone dataset, the car data is split into three training and test pairs in different proportions. We start with applying simple multinomial to all training sets:- 
+```{r fc1,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+#the code chunk prepares the training and test datasets
+#dividing the data set into training and testing sub datasets, 
+split <- c(0.5,0.6,0.7)  # split contains the ratio of partition
+n <- dim(car)[1]  # n stores the dimension of abalone
+#result.abl is going to store the final averaged result of all the statistical methods
+result.car<- data.frame(method = c("Simple Multinomial","Reduced Variable Multinomial", "randomForest","Neural Network"), training.error = c(0),test.error = c(0))
+
+#first pair
+set.seed(1)
+ind <- sample(c(1:n),split[1]*n) # draw random sample of the given size
+car.train1 <- car[ ind,] 
+car.test1 <- car[-ind,]
+#second pair
+set.seed(1)
+ind <- sample(c(1:n),split[2]*n) # draw random sample of the given size
+car.train2 <- car[ ind,] 
+car.test2 <- car[-ind,]
+#third pair
+set.seed(1)
+ind <- sample(c(1:n),split[3]*n) # draw random sample of the given size
+car.train3 <- car[ ind,] 
+car.test3 <- car[-ind,]
+
+```
+
+```{r fc2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multicar} Multinomial regression  output for different splits: Car", fig.pos='H'}
+#the code chunk apply multinomial regression on training sets, and evalutes classification error on test sets. 
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted simple multinomial regression on first train set
+c1 <- multinom( class ~ .,data = car.train1,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(car.test1$class!=predict(c1,car.test1))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(car.train1$class!=predict(c1))
+
+
+# fitted simple multinomial regression on second train set
+# fitted simple multinomial regression on first train set
+c2 <- multinom( class ~ .,data = car.train2,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(car.test2$class!=predict(c2,car.test2))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(car.train2$class!=predict(c2))
+
+
+# fitted simple multinomial regression on third train set
+c3 <- multinom( class ~ .,data = car.train3,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(car.test3$class!=predict(c3,car.test3))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(car.train3$class!=predict(c3))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.car[1,2:3] <- outcome[4,2:3]   # stored the errors in result.car
+
+outcome %>%
+  kable(caption = '\\label{tab:multicar} Multinomial regression output for different splits: Car')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+The multinomial regression for the car data has given reasonably good performance with an overall training error of `r round(outcome[4,"training.error"]*100,4)`% and a test error of `r round(outcome[4,"test.error"]*100,4)`%. Moreover, the test error decreases significantly in split 70:30. Furthermore, we can see confusion matrix \ref{fig:Confc} for class specific errors. 
+
+```{r fc3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Confc} Confusion matrix for multinomial regression: Car", fig.pos='H',fig.align = "center",fig.height=3.5}
+#the code chunk plots the confusion matrix using confusion_matrix function from csmv library
+
+tab <-  confusion_matrix(targets = as.character(car.test2$class) , predictions  = as.character(predict(c2,car.test2)))# created the confusion mat ,  #plot_confusin_matrix draws the colored plot. 
+
+
+plot_confusion_matrix(tab$`Confusion Matrix`[[1]],add_normalized = FALSE,add_row_percentages = FALSE,place_x_axis_above = FALSE)
+
+```
+The group unacc has the lowest classification error, while good has the highest. Groups good and vgood have fewer observations than unacc and acc, which cause higher classification errors. 
+```{r fc4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multivrcar} Variable selection  output for different splits: Car", fig.pos='H',fig.fullwidth=TRUE}
+# this code chunk apply variable selection using a wrapper method on previous multinomial models
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# applied bi-direction wrapper method  on the first multinomial model
+c1 <- stepAIC(c1, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(car.test1$class!=predict(c1,car.test1))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(car.train1$class!=predict(c1))
+
+
+# applied bi-direction wrapper method  on the second multinomial model
+c2 <- stepAIC(c2, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(car.test2$class!=predict(c2,car.test2))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(car.train2$class!=predict(c2))
+
+
+# applied bi-direction wrapper method  on the third multinomial model
+c3 <- stepAIC(c3, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(car.test3$class!=predict(c3,car.test3))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(car.train3$class!=predict(c3))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.car[2,2:3] <- outcome[4,2:3]
+
+outcome %>%
+  kable(caption = '\\label{tab:multivrcar} Variable selection output for different splits: Car')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+The wrapper method doesn't reduce complexity of initial models as all input variables remain intact for all cases. The classification performance is the same as in the previous table \ref{tab:multicar}.
+
+```{r fc5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:rfcar} randomForest  output for different splits: Car", fig.pos='H',fig.fullwidth=TRUE}
+#this code check applies randomForest on all training sets
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted randomForest on the first train set
+c1 <- randomForest(class~., data = car.train1, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(car.test1$class!=predict(c1,car.test1))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(car.train1$class!=predict(c1))
+
+
+#fitted randomForest on the second train set
+c2 <- randomForest(class~., data = car.train2, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(car.test2$class!=predict(c2,car.test2))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(car.train2$class!=predict(c2))
+
+#fitted randomForest on the third train set
+c3 <- randomForest(class~., data = car.train3, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(car.test3$class!=predict(c3,car.test3))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(car.train3$class!=predict(c3))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.car[3,2:3] <- outcome[4,2:3]
+
+outcome %>%
+  kable(caption = '\\label{tab:rfcar} randomForest output for different split: Car')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+
+From table \ref{tab:rfcar}, randomForest performance is good as the comprehensive test and training errors are `r round(outcome[4,"test.error"]*100,4)`% and `r round(outcome[4,"training.error"]*100,4)`% respectively. Moreover, the error rate declines with an increase in the training set size; both test and training errors are lowest for the 70:30 split. The performance is also better than the previous two models. 
+
+```{r fc6, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:NNcar} Neural Network output for different splits: Car", fig.pos='H',fig.fullwidth=TRUE}
+# the code chunk prepares input data for a neural network function using class indicator and model matrix
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+#input data preparation using model matrix
+car_matrix <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.train1)
+car_matrix <- car_matrix[,-1] #removed the first term as that is coefficient
+
+#paste helps to combine all names , easy to write bulky names
+f <- paste(colnames(car_matrix[,1:15]),collapse="+")
+trainData <- cbind(class.ind(car.train1$class),car_matrix)
+
+
+#prepare test data, likewise training set
+car_matrix1 <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.test1)
+car_matrix1 <- car_matrix1[,-1]
+testData <- cbind(class.ind(car.test1$class),car_matrix1)
+set.seed(81)
+#fitted the nueralnetwork
+nn_car1 <- neuralnet( acc+good+unacc+vgood~.,data = trainData ,hidden = c(3,5,3) ,linear.output=FALSE,err.fct='ce')
+
+#compared the target value with predictions
+original_values <- max.col(trainData[,c(1:4)]) #get the target value
+predictions <- max.col(nn_car1$net.result[[1]]) #get the predictions
+outcome[1,"training.error"]<-mean(original_values!=predictions) # compare the result for training set
+
+#steps same as above
+compute_test <- neuralnet::compute(nn_car1,testData[, 5:19])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1:4)])
+outcome[1,"test.error"]<-mean(original_values!=predictions_test) #compare the result for test set
+
+#second data, processes are same as first split
+
+car_matrix <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.train2)
+car_matrix <- car_matrix[,-1]
+
+
+f <- paste(colnames(car_matrix[,1:15]),collapse="+")
+trainData <- cbind(class.ind(car.train2$class),car_matrix)
+
+
+#prepare test data
+car_matrix1 <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.test2)
+car_matrix1 <- car_matrix1[,-1]
+testData <- cbind(class.ind(car.test2$class),car_matrix1)
+set.seed(81)
+nn_car1 <- neuralnet( acc+good+unacc+vgood~.,data = trainData ,hidden = c(3,5,3) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(1:4)])
+predictions <- max.col(nn_car1$net.result[[1]])
+outcome[2,"training.error"]<-mean(original_values!=predictions)
+
+compute_test <- neuralnet::compute(nn_car1,testData[, 5:19])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1:4)])
+outcome[2,"test.error"]<-mean(original_values!=predictions_test)
+
+#3rd split, process are same as first split
+
+car_matrix <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.train3)
+car_matrix <- car_matrix[,-1]
+
+
+f <- paste(colnames(car_matrix[,1:15]),collapse="+")
+trainData <- cbind(class.ind(car.train3$class),car_matrix)
+
+
+#prepare test data
+car_matrix1 <- model.matrix(~Buying+maint+doors+persons+lug.boot+safety, data=car.test3)
+car_matrix1 <- car_matrix1[,-1]
+testData <- cbind(class.ind(car.test3$class),car_matrix1)
+set.seed(81)
+nn_car1 <- neuralnet( acc+good+unacc+vgood~.,data = trainData ,hidden = c(3,5,3) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(1:4)])
+predictions <- max.col(nn_car1$net.result[[1]])
+outcome[3,"training.error"]<-mean(original_values!=predictions)
+
+compute_test <- neuralnet::compute(nn_car1,testData[, 5:19])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1:4)])
+outcome[3,"test.error"]<-mean(original_values!=predictions_test)
+
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.car[4,2:3] <- outcome[4,2:3] # stored the erros in resul.car
+
+outcome %>%
+  kable(caption = '\\label{tab:NNcar} Neural Network output for different splits: Car')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+The Neural Network with hyperparamter (3,5,3) has given extraordinary performance for the car dataset with an overall `r round(outcome[4,"training.error"]*100,4)`% training error and `r round(outcome[4,"test.error"]*100,4)`% test error. The performance is much better than all previous methods. The test error has improved by around 6%, which is a significant achievement. The figure \ref{fig:com1} presents all the performances  method wise in a barplot. 
+
+
+
+
+```{r fc7, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:com1} Comparision of performances :Car", fig.pos='H',fig.align = "center",fig.height=3.5,fig.width=10}
+
+#the code chunk draws bar plots for training and test classificaton errors for all statistical methods
+
+  g1<-ggplot(data =result.car, mapping = aes(x = method, y = training.error, )) +
+  geom_col(fill="red") +  # draws a barplot
+    labs(x = "Method", y = "Training error",title = "Training error comparison")+
+   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+#geo_col produces bar plot
+  
+  g2<-ggplot(data =result.car, mapping = aes(x = method, y = test.error, )) +
+  geom_col(fill="green") +  # draws a barplot
+  labs(x = "Method", y = "Test error",title = "Test error comparison")+
+     theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+  grid.arrange(g1,g2,nrow = 1)
+
+```
+As displayed in figure \ref{fig:com1}, every statistical method has performed well. However, advanced statistical methods have even better performance than simple multinomial regression. A Neural Network emerges to be the clear winner. The excellent performance attribute goes to a reasonably uniform distribution of categorical covariates and absence of numerical covariate. Multinomial performance lagged because of two groups good and vgood which were fewer in numbers. Randomforest has around 3% more classification accuracy than multinomial. 
+
+## Contraceptive Method Choice
+
+In section \ref{sec:expocon}, we had performed the exploratory analysis of contraceptive method choice, removed the outliers of children having age greater than 12, and analyzed boxplots, barplots. From here, we delve deeper by doing formal analysis. Likewise, for abalone and car, the steps are the same. So, let's start with the performance checking of multinomial regression. 
+
+```{r fct1,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+#the code chunk performs preliminary work of setting training and test datasets
+maxsc <- apply(contra[,c("age","children")], 2, max) #used for scaling in neural network
+minsc <- apply(contra[,c("age","children")], 2, min)  #used for sacling in neural network
+# will be used for scaling during Neural Network
+
+#dividing the data set into training and testing sub datasets, 
+split <- c(0.5,0.6,0.7)  # split contains the ratio of partition
+n <- dim(contra)[1]  # n stores the dimension of abalone
+#result.abl is going to store the final averaged result of all the statistical methods
+result.contra<- data.frame(method = c("Simple Multinomial","Reduced Variable Multinomial", "randomForest","Neural Network"), training.error = c(0),test.error = c(0))
+
+#first pair
+set.seed(1)
+ind <- sample(c(1:n),split[1]*n) # draw random sample of the given size
+contra.train1 <- contra[ ind,] 
+contra.test1 <-  contra[-ind,]
+#second pair
+set.seed(1)
+ind <- sample(c(1:n),split[2]*n) # draw random sample of the given size
+contra.train2 <- contra[ ind,] 
+contra.test2 <- contra[-ind,]
+#third pair
+set.seed(1)
+ind <- sample(c(1:n),split[3]*n) # draw random sample of the given size
+contra.train3 <- contra[ ind,] 
+contra.test3 <- contra[-ind,]
 
 ```
 
 
-\newpage
+```{r fct2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multicon} Multinomial regression  output for different splits: Contraceptive", fig.pos='H'}
+#this code chunk applies multinomial regression on all training subsets of contraceptive dataset. 
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted simple multinomial regression on first train set
+c1 <- multinom( contraceptive ~ .,data = contra.train1,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(contra.test1$contraceptive)!=as.character(predict(c1,contra.test1)))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(contra.train1$contraceptive)!=as.character(predict(c1)))
+
+# fitted simple multinomial regression on first train set
+c2 <- multinom( contraceptive ~ .,data = contra.train2,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(contra.test2$contraceptive)!=as.character(predict(c2,contra.test2)))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(contra.train2$contraceptive)!=as.character(predict(c2)))
+
+
+# fitted simple multinomial regression on first train set
+c3 <- multinom( contraceptive ~ .,data = contra.train3,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(contra.test3$contraceptive)!=as.character(predict(c3,contra.test3)))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(contra.train3$contraceptive)!=as.character(predict(c3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.contra[1,2:3] <- outcome[4,2:3]
+outcome %>%
+  kable(caption = '\\label{tab:multicon} Multinomial regression output for different splits: Contraceptive')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+Table \ref{tab:multicon} presents the performance report of multinomial regression. The method is performing slightly better on the 50:50 split. The classification error rate is very high as the overall test error rate crosses 50%. A confusion matrix in figure \ref{fig:Confcon} can help to understand the core of the problem. 
+
+```{r fct3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Confcon} Confusion matrix for multinomial regression: Contra", fig.pos='H',fig.align = "center",fig.height=3.5,fig.width=10}
+#the code chunk plots the confusion matrix using confusion_matrix function from csmv library
+
+tab <-  confusion_matrix(targets = as.character(contra.test2$contraceptive) , predictions  = as.character(predict(c2,contra.test2)))# created the confusion matrix ,#plot_confusin_matrix draws the colored plot. 
+
+plot_confusion_matrix(tab$`Confusion Matrix`[[1]],add_normalized = FALSE,add_row_percentages = FALSE,place_x_axis_above = FALSE)
+
+```
+Group 1 has the highest true classification rate of 60.5%, whereas group 2 has the lowest, around 30.6%. 39.6% of the predictions of group 2 have been wrongly done to group 1. Moreover, 38.4% of group 3 predictions have been wrongly attributed to group 1. Conclusively, the more is data , the better is prediction. 
+
+```{r fct4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multivrcon} Variable reduction  output for different split", fig.pos='H',fig.fullwidth=TRUE}
+# this code chunk apply variable selection using a wrapper method on previous multinomial models
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# # applied bi-direction wrapper method  on the first multinomial model
+
+c1 <- stepAIC(c1, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(contra.test1$contraceptive)!=as.character(predict(c1,contra.test1)))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(contra.train1$contraceptive)!=as.character(predict(c1)))
+
+# # applied bi-direction wrapper method  on the second multinomial model
+
+c2 <- stepAIC(c2, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(contra.test2$contraceptive)!=as.character(predict(c2,contra.test2)))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(contra.train2$contraceptive)!=as.character(predict(c2)))
+
+
+# applied bi-direction wrapper method  on the third multinomial model
+
+c3 <- stepAIC(c3, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(contra.test3$contraceptive)!=as.character(predict(c3,contra.test3)))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(contra.train3$contraceptive)!=as.character(predict(c3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.contra[2,2:3] <- outcome[4,2:3]
+
+outcome %>%
+  kable(caption = '\\label{tab:multivrcon} Variable reduction output for different splits: Contraceptive')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+
+Applying bi-directional elimination methods leads to `r c1$n[1]-1`, `r c2$n[1]-1`, and  `r c3$n[1]-1` to the respective multinomial models with split 50,60, and 70. The original model has 19 variables, so the wrapper methods have reduced the complexity, but the overall test and training errors remain the close to the former ones.  
+
+```{r fct5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:rafcon} randomForest  output for different splits: Contraceptive", fig.pos='H',fig.width=10, fig.height= 4,fig.fullwidth=TRUE}
+#this code chunk applies randomForest to all training sets of contraceptive
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted randomForest on first train set
+c1 <- randomForest(contraceptive~., data = contra.train1, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(contra.test1$contraceptive)!=as.character(predict(c1,contra.test1)))
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(contra.train1$contraceptive)!=as.character(predict(c1)))
+
+# fitted randomForest on first train set
+c2 <- randomForest(contraceptive~., data = contra.train2, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(contra.test2$contraceptive)!=as.character(predict(c2,contra.test2)))
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(contra.train2$contraceptive)!=as.character(predict(c2)))
+
+
+# fitted randomForest on first train set
+c3 <- randomForest(contraceptive~., data = contra.train3, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(contra.test3$contraceptive)!=as.character(predict(c3,contra.test3)))
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(contra.train3$contraceptive)!=as.character(predict(c3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.contra[3,2:3] <- outcome[4,2:3]
+
+outcome %>%
+  kable(caption = '\\label{tab:rafcon} randomForest output for different split')%>%
+  kable_styling(latex_options="hold_position")
+
+
+
+```
+RandomForest's outcomes in table \ref{tab:rafcon} are slightly better than the former two methods. The 50:50 split seems to be more suitable for the technique with the lowest test rates `r round(outcome[1,"test.error"]*100,4)`%. The overall test and training classification error rates have marginally gone below 50. 
+
+```{r fct6, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:nncon} Neural Network  output for different splits: Contraceptive", fig.pos='H',fig.fullwidth=TRUE}
+#This code chunk applies neural network on the training sets
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+#prepared the input training data matrix for the neural network using model matrix and class indiacator functions
+contra_matrix <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.train1)
+contra_matrix <- contra_matrix[,-1]
+trainData <- cbind(class.ind(contra.train1$contraceptive),contra_matrix,contra.train1$age,contra.train1$children)
+#scaling
+#scaled age and children continuous variables for training set
+trainData[,c(19,20)]<-scale(trainData[,19:20], center = minsc, scale = maxsc - minsc)
+#prepare test data
+#prepared the input training data matrix for the neural network using model matrix and class indiacator functions
+contra_matrix1 <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.test1)
+contra_matrix1 <- contra_matrix1[,-1]
+testData <- cbind(class.ind(contra.test1$contraceptive),contra_matrix1,contra.test1$age,contra.test1$children)
+
+##scaled age and children continuous variables for test set
+testData[,19:20]<-scale(testData[,19:20], center = minsc, scale = maxsc - minsc)
+set.seed(81)
+nn_contra <- neuralnet( `1`+`2`+`3`~.,data = trainData ,hidden = c(6) ,linear.output=FALSE,err.fct='ce')
+# training error evaluation
+original_values <- max.col(trainData[,c(1:3)]) #target value
+predictions <- max.col(nn_contra$net.result[[1]]) #predicted value
+outcome[1,"training.error"]<-mean(original_values!=predictions) # compared the two values
+#test error evaluation
+compute_test <- neuralnet::compute(nn_contra,testData[,4:20])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1,2,3)])
+outcome[1,"test.error"]<-mean(original_values!=predictions_test)
+
+#2nd data,  steps similar to the first one 
+contra_matrix <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.train2)
+contra_matrix <- contra_matrix[,-1]
+trainData <- cbind(class.ind(contra.train2$contraceptive),contra_matrix,contra.train2$age,contra.train2$children)
+#scaling
+trainData[,c(19,20)]<-scale(trainData[,19:20], center = minsc, scale = maxsc - minsc)
+
+#prepare test data
+contra_matrix1 <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.test2)
+contra_matrix1 <- contra_matrix1[,-1]
+testData <- cbind(class.ind(contra.test2$contraceptive),contra_matrix1,contra.test2$age,contra.test2$children)
+
+#scaling
+testData[,19:20]<-scale(testData[,19:20], center = minsc, scale = maxsc - minsc)
+set.seed(81)
+nn_contra <- neuralnet( `1`+`2`+`3`~.,data = trainData ,hidden = c(6) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(1:3)])
+predictions <- max.col(nn_contra$net.result[[1]])
+outcome[2,"training.error"]<-mean(original_values!=predictions)
+
+compute_test <- neuralnet::compute(nn_contra,testData[,4:20])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1,2,3)])
+outcome[2,"test.error"]<-mean(original_values!=predictions_test)
+
+
+
+#3rd  steps similar to the first one 
+contra_matrix <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.train3)
+contra_matrix <- contra_matrix[,-1]
+trainData <- cbind(class.ind(contra.train3$contraceptive),contra_matrix,contra.train3$age,contra.train3$children)
+#scaling
+
+trainData[,c(19,20)]<-scale(trainData[,19:20], center = minsc, scale = maxsc - minsc)
+#prepare test data
+contra_matrix1 <- model.matrix(~w.education+h.education+religion+working+occupation+standard +media , data=contra.test3)
+contra_matrix1 <- contra_matrix1[,-1]
+testData <- cbind(class.ind(contra.test3$contraceptive),contra_matrix1,contra.test3$age,contra.test3$children)
+
+#scaling
+testData[,19:20]<-scale(testData[,19:20], center = minsc, scale = maxsc - minsc)
+set.seed(81)
+nn_contra <- neuralnet( `1`+`2`+`3`~.,data = trainData ,hidden = c(6) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(1:3)])
+predictions <- max.col(nn_contra$net.result[[1]])
+outcome[3,"training.error"]<-mean(original_values!=predictions)
+
+compute_test <- neuralnet::compute(nn_contra,testData[,4:20])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1,2,3)])
+outcome[3,"test.error"]<-mean(original_values!=predictions_test)
+
+
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.contra[4,2:3] <- outcome[4,2:3] # stored the errors in result matrix
+
+outcome %>%
+  kable(caption = '\\label{tab:nncon} Neural Network output for different splits: Contraceptive')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+
+The training errors in table \ref{tab:nncon} have reduced significantly, whereas test errors are still high. The big gap between training and test errors for all splits could be due to over-fitting. However, hyperparameters other than 6 for the Neural Network have given even the worst results. Now we compare the overall performances of all statistical methods. 
+```{r fct7, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:com2} Comparision of performances :Contraceptive", fig.pos='H',fig.fullwidth=TRUE,fig.align = "center",fig.height=3.5,fig.width=10}
+
+#the code chunk draws bar plots for training and test classificaton errors for all statistical methods
+
+  g1<-ggplot(data =result.contra, mapping = aes(x = method, y = training.error, )) +
+  geom_col(fill="red") +  # draws a barplot
+    labs(x = "Method", y = "Training error",title = "Training error comparison")+
+   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+#geo_col produces bar plot
+  
+  g2<-ggplot(data =result.contra, mapping = aes(x = method, y = test.error, )) +
+  geom_col(fill="green") +  # draws a barplot
+  labs(x = "Method", y = "Test error",title = "Test error comparison")+
+     theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+  grid.arrange(g1,g2,nrow = 1)
+
+
+```
+All statistical methods have failed to give a good result. Among these, randomForest has slightly better test performance than any other method. The Neural Network has the lowest training error and seems to be overfitted. The variable reduction has successfully reduced the multinomial model complexity while producing the same classification error rate. The poor result could be due to the presence of numerical covariates.
+
+## Nursery
+Section \ref{sec:exponur} has already discussed the initial exploration of the dataset, removed recommended group from the response variable, and understood the relationship of the class variable with other covariates. Likewise, the previous procedure, we split the data into three subset pairs in different proportions and fit a multinomial regression. 
+
+```{r fn1,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+#the code chunk prepare the trainign and test datasests based on proportion in splits
+
+#dividing the data set into training and testing sub datasets, 
+split <- c(0.5,0.6,0.7)  # split contains the ratio of partition
+n <- dim(nursery)[1]  # n stores the dimension of abalone
+#result.abl is going to store the final averaged result of all the statistical methods
+result.nur<- data.frame(method = c("Simple Multinomial","Reduced Variable Multinomial", "randomForest","Neural Network"), training.error = c(0),test.error = c(0))
+
+#first pair
+set.seed(1)
+ind <- sample(c(1:n),split[1]*n) # draw random sample of the given size
+nur.train1 <- nursery[ ind,] 
+nur.test1 <- nursery[-ind,]
+#second pair
+set.seed(1)
+ind <- sample(c(1:n),split[2]*n) # draw random sample of the given size
+nur.train2 <- nursery[ ind,] 
+nur.test2 <- nursery[-ind,]
+#third pair
+set.seed(1)
+ind <- sample(c(1:n),split[3]*n) # draw random sample of the given size
+nur.train3 <- nursery[ ind,] 
+nur.test3 <- nursery[-ind,]
+
+```
+
+
+
+```{r fn2, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multinur} Multinomial regression  output for different splits: Nursery", fig.pos='H'}
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted simple multinomial regression on first train set
+c1 <- multinom( class ~ .,data = nur.train1,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(nur.test1$class)!=as.character(predict(c1,nur.test1)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(nur.train1$class)!=as.character(predict(c1)))
+
+# fitted simple multinomial regression on first train set
+c2 <- multinom( class ~ .,data = nur.train2,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(nur.test2$class)!=as.character(predict(c2,nur.test2)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(nur.train2$class)!=as.character(predict(c2)))
+
+
+
+# fitted simple multinomial regression on first train set
+c3 <- multinom( class ~ .,data = nur.train3,maxit = 1000,trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(nur.test3$class)!=as.character(predict(c3,nur.test3)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(nur.train3$class)!=as.character(predict(c3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.nur[1,2:3] <- outcome[4,2:3]
+outcome %>%
+  kable(caption = '\\label{tab:multinur} Multinomial regression output for different split')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+The multinomial regression on the nursery dataset gives a fairly good performance with an overall training error `r round(outcome[4,"training.error"]*100,4)`% and test error `r round(outcome[4,"test.error"]*100,4)`%. The error rate is consistent across all splits; however, the 60:40 break gives the minimum classification errors. We can analyze the confusion matrix in figure \ref{fig:Confnur}
+
+```{r fn3, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:Confnur} Confusion matrix for multinomial regression: Nursery", fig.pos='H',fig.align = "center",fig.height=3.5,fig.width=10}
+#the code chunk plots the confusion matrix using confusion_matrix function from csmv library
+
+#plot_confusin_matrix draws the colored plot. 
+
+tab <-  confusion_matrix(targets = as.character(nur.test2$class) , predictions  = as.character(predict(c2,nur.test2)))# created the confusion matrix 
+plot_confusion_matrix(tab$`Confusion Matrix`[[1]],add_normalized = FALSE,add_row_percentages = FALSE,place_x_axis_above = FALSE)
+
+```
+There is an almost 100% true classification rate for the not_recom group. Conversely, the group very_recom has suffered the most, with the lowest true classification rate of 78.6%. The performance difference could be due to data availability, as the very_recom group has much lesser data than not_recomm. Most of the misprediction for the very_recom group has been done as a priority.
+
+```{r fn4, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:multivrnur} Variable selection  output for different splits: Nursery", fig.pos='H'}
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# # applied bi-direction wrapper method  on the first multinomial model
+
+c1 <- stepAIC(c1, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(nur.test1$class)!=as.character(predict(c1,nur.test1)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(nur.train1$class)!=as.character(predict(c1)))
+
+# # applied bi-direction wrapper method  on the first multinomial model
+
+c2  <- stepAIC(c2, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(nur.test2$class)!=as.character(predict(c2,nur.test2)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(nur.train2$class)!=as.character(predict(c2)))
+
+
+
+## applied bi-direction wrapper method  on the first multinomial model
+
+c3   <- stepAIC(c3, direction="both",trace = FALSE)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(nur.test3$class)!=as.character(predict(c3,nur.test3)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(nur.train3$class)!=as.character(predict(c3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.nur[2,2:3] <- outcome[4,2:3]
+outcome %>%
+  kable(caption = '\\label{tab:multivrnur} Variable selection output for different split')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+Variable reduction retains the same number of variables as in the former multinomial model for all the splits. Henceforth, the performance outcomes are also the same as original multinomial models. Now, we go for randomForest. 
+
+```{r fn5, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:rafnur} RandomForest output for different split", fig.pos='H',fig.fullwidth=TRUE}
+#this code chunk applies randomForest on all the three training sets and evaluate outcomes on the test sets
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+
+# fitted  RandomForest on first train set
+nur.train1 <- droplevels(nur.train1 )
+c1 <- randomForest(class~., data = nur.train1, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[1,"test.error"]<-mean(as.character(nur.test1$class)!=as.character(predict(c1,nur.test1)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[1,"training.error"]<-mean(as.character(nur.train1$class)!=as.character(predict(c1)))
+
+# fitted RandomForest on first train set
+nur.train2 <- droplevels(nur.train2 )
+c2  <- randomForest(class~., data = nur.train2, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[2,"test.error"]<-mean(as.character(nur.test2$class)!=as.character(predict(c2,nur.test2)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[2,"training.error"]<-mean(as.character(nur.train2$class)!=as.character(predict(c2)))
+
+
+
+# fitted RandomForest on first train set
+nur.train3 <- droplevels(nur.train3 )
+c3   <- randomForest(class~., data = nur.train3, ntree = 200)
+# stored corresponding test error in outcome 
+outcome[3,"test.error"]<-mean(as.character(nur.test3$class)!=as.character(predict(c3,nur.test3)))
+#variable selection
+# stored corresponding training error in outcome   
+outcome[3,"training.error"]<-mean(as.character(nur.train3$class)!=as.character(predict(c3)))
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.nur[3,2:3] <- outcome[4,2:3]
+outcome %>%
+  kable(caption = '\\label{tab:rafnur} RandomForest output for different split')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+
+RandomForest has performed much better than the multinomial regression as the overall test error is `r outcome[4,"test.error"]`, which is around 4% less than the later one. Also, the 50:50 split gives the lowest training and test errors. 
+
+```{r fn6, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:NNnur} Neural Network  output for different splits: Nursery", fig.pos='H'}
+#this code chuck does the work for neural network
+outcome <- data.frame(split = c("50:50","60:40","70:30","Overall"),training.error = c(0),test.error = c(0))  #outcome stores both errors rate for each split
+
+# prepare the input data for the neural network function using model matrix and class indicator function
+nursery_matrix <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nur.train1)
+nursery_matrix <- nursery_matrix[,-1]# removed the first intercept term
+trainData <- cbind(class.ind(nur.train1$class),nursery_matrix)
+
+#prepare test data , likewise the training data
+nursery_matrix1 <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nur.test1)
+nursery_matrix1 <- nursery_matrix1[,-1]
+testData <- cbind(class.ind(nur.test1$class),nursery_matrix1)
+
+
+#best 55***, 54,53***,
+set.seed(81)
+nn_nursery <- neuralnet( not_recom+priority+spec_prior+very_recom~.,data = trainData ,hidden = c(5,5) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(1:4)]) #target
+predictions <- max.col(nn_nursery$net.result[[1]]) #prediction
+outcome[1,"training.error"]<-mean(original_values!=predictions) #performance evaluation
+#same as training error evaluation
+compute_test <- neuralnet::compute(nn_nursery,testData[,6:24])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1,2,4,5)])
+outcome[1,"test.error"]<-mean(original_values!=predictions_test)
+
+######################## for second training set, all steps are similar to the first one
+nursery_matrix <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nur.train2)
+nursery_matrix <- nursery_matrix[,-1]
+trainData <- cbind(class.ind(nur.train2$class),nursery_matrix)
+
+#prepare test data
+nursery_matrix1 <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nur.test2)
+nursery_matrix1 <- nursery_matrix1[,-1]
+testData <- cbind(class.ind(nur.test2$class),nursery_matrix1)
+
+
+#best 55***, 54,53***,
+set.seed(81)
+nn_nursery <- neuralnet( not_recom+priority+spec_prior+very_recom~.,data = trainData ,hidden = c(5,5) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(1:4)])
+predictions <- max.col(nn_nursery$net.result[[1]])
+outcome[2,"training.error"]<-mean(original_values!=predictions)
+
+compute_test <- neuralnet::compute(nn_nursery,testData[,6:24])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1,2,4,5)])
+outcome[2,"test.error"]<-mean(original_values!=predictions_test)
+
+##############################################all steps are similar to the first one
+nursery_matrix <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nur.train3)
+nursery_matrix <- nursery_matrix[,-1]
+trainData <- cbind(class.ind(nur.train3$class),nursery_matrix)
+
+#prepare test data
+nursery_matrix1 <- model.matrix(~parents+has_nurs+form+children+housing+finance+social+health, data=nur.test3)
+nursery_matrix1 <- nursery_matrix1[,-1]
+testData <- cbind(class.ind(nur.test3$class),nursery_matrix1)
+
+
+#best 55***, 54,53***,
+set.seed(81)
+nn_nursery <- neuralnet( not_recom+priority+spec_prior+very_recom~.,data = trainData ,hidden = c(5,5) ,linear.output=FALSE,err.fct='ce')
+
+original_values <- max.col(trainData[,c(1:4)])
+predictions <- max.col(nn_nursery$net.result[[1]])
+outcome[3,"training.error"]<-mean(original_values!=predictions)
+
+compute_test <- neuralnet::compute(nn_nursery,testData[,6:24])
+predictions_test <- max.col(compute_test$net.result)
+original_values <- max.col(testData[,c(1,2,4,5)])
+outcome[3,"test.error"]<-mean(original_values!=predictions_test)
+
+#average all the training and test errors
+outcome[4,2:3] <- apply(outcome[1:3,-1],2,mean)
+result.nur[4,2:3] <- outcome[4,2:3]
+
+outcome %>%
+  kable(caption = '\\label{tab:NNnur} Neural Network output for different splits: Nursery')%>%
+  kable_styling(latex_options="hold_position")
+
+
+```
+Table \ref{tab:NNnur} depicts the extraordinary performances of the Neural Network for the nursery dataset. The overall training and test errors have reduced to `r round(outcome[4,"training.error"],4)` and `r round(outcome[4,"test.error"],4)`, which are way less than the former models. The performance improves as more and more data are available for training, and the best comes out for the 70:30 split with 100% true classification performances. Now, compare the overall performances of all statistical models. 
+ 
+```{r fn7, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE,fig.cap="\\label{fig:com3} Comparision of performances : Nursery", fig.pos='H',fig.fullwidth=TRUE,fig.align = "center",fig.height=3.5,fig.width=10}
+
+#the code chunk draws bar plots for training and test classificaton errors for all statistical methods
+
+  g1<-ggplot(data =result.nur, mapping = aes(x = method, y = training.error, )) +
+  geom_col(fill="red") +  # draws a barplot
+    labs(x = "Method", y = "Training error",title = "Training error comparison")+
+   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+#geo_col produces bar plot
+  
+  g2<-ggplot(data =result.nur, mapping = aes(x = method, y = test.error, )) +
+  geom_col(fill="green") +  # draws a barplot
+  labs(x = "Method", y = "Test error",title = "Test error comparison")+
+     theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+  
+grid.arrange(g1,g2,nrow = 1)
+
+
+```
+Performance comparison in figure \ref{fig: com3} shows that the Neural Network is the foremost runner, followed by randomForest. The variable reduction has not helped either way. The minimum overall test error is around 0.1%. The multinomial regression performance is fair, but other advanced statistical models have overshadowed it. The attribute for good performances is the absence of numerical variables, outliers, and sufficient observations for groups. 
+
 # Conclusion {#sec:con}
+A performance measure criteria can be designed by splitting data into multiple training and test of different proportions. Each statistical method is trained on every training set for each dataset, and classification error is evaluated on the corresponding test set. Eventually, all the test errors for a statistical method are averaged to give a final classification error. In the end, all classification errors of respective statistical methods are compared to evaluate the best one for the dataset. The research project used the same performance criteria to calculate multinomial regression performance. 
+
+The overall classification error rate can be used to compare the performances of multinomial regression with advanced statistical methods such as randomForest and Neural Network. The specific class error can help to evaluate group-wise performance. As more data is available for the group, the classification accuracy is better, as shown in the confusion matrix of different datasets. 
+
+The presence of numerical covariates and sparse data can severely distort the classification performance. The dataset abalone and contra suffered because of the same reasons. 
+
+The neural network can give high accuracy in classification for only categorical features datasets. The method has more than 99% classification accuracy for car and nursery datasets. Furthermore, the performance improves as more and more data are available for training. For instance, the classification accuracy was slightly better for the nursery dataset than the car dataset. 
+
+RandomForest performs better than the multinomial regression but poorer than the Neural Network in the case of categorical feature dataset. Besides it, both PCA and variable selection can help reduce dimensionality, keeping the performance the same as multinomial regression, as shown in the abalone and contraceptive dataset. 
+
+
+
+
 # Future Work{#sec:ext}
-\newpage
+1. Use of LASSO, Chi-square, Mutual information of variable selection instead of greedy wrapper methods.
+2. Introduce more hyper-parameters in Neural Network beyond 3 hidden layers.
+3. Performance comparison on datasets having size greater than 50,000.
+
+
 # References {#sec:ref}
 
 
